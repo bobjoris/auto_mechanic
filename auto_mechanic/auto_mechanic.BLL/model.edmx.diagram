@@ -4,7 +4,23 @@
   <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
-      <Diagram DiagramId="bc65b6a9543b4279acc550a6895375dc" Name="Diagramme1" />
+      <Diagram DiagramId="bc65b6a9543b4279acc550a6895375dc" Name="Diagramme1" ZoomLevel="61" >
+        <EntityTypeShape EntityType="AutomechanicsModel.Mechanic" Width="1.5" PointX="5.25" PointY="3.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="AutomechanicsModel.Franchise" Width="1.5" PointX="5.25" PointY="0.75" />
+        <AssociationConnector Association="AutomechanicsModel.FranchiseMechanic" />
+        <EntityTypeShape EntityType="AutomechanicsModel.Service" Width="1.5" PointX="12.25" PointY="3.375" />
+        <EntityTypeShape EntityType="AutomechanicsModel.Mechanic_Service" Width="1.5" PointX="8.75" PointY="3.375" />
+        <AssociationConnector Association="AutomechanicsModel.MechanicMechanic_Service" />
+        <AssociationConnector Association="AutomechanicsModel.ServiceMechanic_Service" />
+        <EntityTypeShape EntityType="AutomechanicsModel.Car" Width="1.5" PointX="8.875" PointY="6.125" />
+        <EntityTypeShape EntityType="AutomechanicsModel.Brand" Width="1.5" PointX="5.25" PointY="6.5" />
+        <AssociationConnector Association="AutomechanicsModel.BrandCar" />
+        <EntityTypeShape EntityType="AutomechanicsModel.ServiceBook" Width="1.5" PointX="12.25" PointY="6.625" />
+        <AssociationConnector Association="AutomechanicsModel.ServiceBookCar" />
+        <AssociationConnector Association="AutomechanicsModel.ServiceBookService" />
+        <EntityTypeShape EntityType="AutomechanicsModel.Holiday" Width="1.5" PointX="2" PointY="3.375" />
+        <AssociationConnector Association="AutomechanicsModel.MechanicHoliday" />
+      </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>
 </edmx:Edmx>

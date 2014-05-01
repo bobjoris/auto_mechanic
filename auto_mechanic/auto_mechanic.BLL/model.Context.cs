@@ -25,5 +25,13 @@ namespace auto_mechanic.BLL
             throw new UnintentionalCodeFirstException();
         }
     
+        public DbSet<Mechanic> Mechanic { get; set; }
+        public DbSet<Franchise> Franchise { get; set; }
+        public DbSet<Service> Service { get; set; }
+        public DbSet<Mechanic_Service> Mechanic_Service { get; set; }
+        public DbSet<Car> Car { get; set; }
+        public DbSet<Brand> Brand { get; set; }
+        public DbSet<ServiceBook> ServiceBook { get; set; }
+        public DbSet<Holiday> Holiday { get; set; }
     }
 }
