@@ -295,7 +295,6 @@
           <Property Type="Int32" Name="ID" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Type="String" Name="Label" Nullable="false" />
           <Property Type="Int32" Name="KM" Nullable="false" />
-          <NavigationProperty Name="Mechanic_Service" Relationship="AutomechanicsModel.ServiceMechanic_Service" FromRole="Service" ToRole="Mechanic_Service" />
         </EntityType>
         <EntityType Name="Mechanic_Service">
           <Key>

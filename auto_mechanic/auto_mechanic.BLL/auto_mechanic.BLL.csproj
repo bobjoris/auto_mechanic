@@ -58,6 +58,7 @@
     <Compile Include="Holiday.cs">
       <DependentUpon>model.tt</DependentUpon>
     </Compile>
+    <Compile Include="Holiday.partial.cs" />
     <Compile Include="Mechanic.cs">
       <DependentUpon>model.tt</DependentUpon>
     </Compile>

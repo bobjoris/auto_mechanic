@@ -20,7 +20,7 @@ namespace auto_mechanic.Controllers
         // GET api/Default1
         public HttpResponseMessage GetMechanics()
         {
-            var mechanic = db.Mechanic.Include(m => m.Franchise);
+            var mechanic = db.Mechanic.Include(m => m.Franchise).Include(m => m.Mechanic_Service);
             return Tools.JsonResponse(mechanic.AsEnumerable());
         }
 

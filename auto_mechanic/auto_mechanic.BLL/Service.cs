@@ -14,15 +14,8 @@ namespace auto_mechanic.BLL
     
     public partial class Service
     {
-        public Service()
-        {
-            this.Mechanic_Service = new HashSet<Mechanic_Service>();
-        }
-    
         public int ID { get; set; }
         public string Label { get; set; }
         public int KM { get; set; }
-    
-        public virtual ICollection<Mechanic_Service> Mechanic_Service { get; set; }
     }
 }
