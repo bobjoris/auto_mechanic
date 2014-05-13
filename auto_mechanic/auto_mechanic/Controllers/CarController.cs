@@ -1,0 +1,124 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Data;
+using System.Data.Entity;
+using System.Data.Entity.Infrastructure;
+using System.Linq;
+using System.Net;
+using System.Net.Http;
+using System.Web;
+using System.Web.Http;
+using auto_mechanic.BLL;
+using Newtonsoft.Json;
+using System.Web.Script.Serialization;
+
+namespace auto_mechanic.Controllers
+{
+    public class CarController : ApiController
+    {
+        private AutomechanicsEntities db = new AutomechanicsEntities();
+
+        // GET api/Car
+        public HttpResponseMessage GetCars()
+        {
+            var car = db.Car.ToList();
+
+
+            string res = JsonConvert.SerializeObject(car, Formatting.Indented, new JsonSerializerSettings
+            {
+                ReferenceLoopHandling = ReferenceLoopHandling.Ignore
+            });
+
+            return new HttpResponseMessage()
+            {
+                Content = new StringContent(res),
+            };
+        }
+
+        // GET api/Car/5
+        public Car GetCar(int id)
+        {
+            Car car = db.Car.Find(id);
+            if (car == null)
+            {
+                throw new HttpResponseException(Request.CreateResponse(HttpStatusCode.NotFound));
+            }
+
+            return car;
+        }
+
+        // PUT api/Car/5
+        public HttpResponseMessage PutCar(int id, Car car)
+        {
+            if (!ModelState.IsValid)
+            {
+                return Request.CreateErrorResponse(HttpStatusCode.BadRequest, ModelState);
+            }
+
+            if (id != car.ID)
+            {
+                return Request.CreateResponse(HttpStatusCode.BadRequest);
+            }
+
+            db.Entry(car).State = EntityState.Modified;
+
+            try
+            {
+                db.SaveChanges();
+            }
+            catch (DbUpdateConcurrencyException ex)
+            {
+                return Request.CreateErrorResponse(HttpStatusCode.NotFound, ex);
+            }
+
+            return Request.CreateResponse(HttpStatusCode.OK);
+        }
+
+        // POST api/Car
+        public HttpResponseMessage PostCar(Car car)
+        {
+            if (ModelState.IsValid)
+            {
+                db.Car.Add(car);
+                db.SaveChanges();
+
+                HttpResponseMessage response = Request.CreateResponse(HttpStatusCode.Created, car);
+                response.Headers.Location = new Uri(Url.Link("DefaultApi", new { id = car.ID }));
+                return response;
+            }
+            else
+            {
+                return Request.CreateErrorResponse(HttpStatusCode.BadRequest, ModelState);
+            }
+        }
+
+        // DELETE api/Car/5
+        public HttpResponseMessage DeleteCar(int id)
+        {
+            Car car = db.Car.Find(id);
+            if (car == null)
+            {
+                return Request.CreateResponse(HttpStatusCode.NotFound);
+            }
+
+            db.Car.Remove(car);
+
+            try
+            {
+                db.SaveChanges();
+            }
+            catch (DbUpdateConcurrencyException ex)
+            {
+                return Request.CreateErrorResponse(HttpStatusCode.NotFound, ex);
+            }
+
+            return Request.CreateResponse(HttpStatusCode.OK, car);
+        }
+
+        protected override void Dispose(bool disposing)
+        {
+            db.Dispose();
+            base.Dispose(disposing);
+        }
+    }
+}
