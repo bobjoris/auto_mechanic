@@ -14,14 +14,7 @@ namespace auto_mechanic.BLL
     
     public partial class Franchise
     {
-        public Franchise()
-        {
-            this.Mechanic = new HashSet<Mechanic>();
-        }
-    
         public int ID { get; set; }
         public string Name { get; set; }
-    
-        public virtual ICollection<Mechanic> Mechanic { get; set; }
     }
 }

@@ -14,14 +14,7 @@ namespace auto_mechanic.BLL
     
     public partial class Brand
     {
-        public Brand()
-        {
-            this.Car = new HashSet<Car>();
-        }
-    
         public int ID { get; set; }
         public string Name { get; set; }
-    
-        public virtual ICollection<Car> Car { get; set; }
     }
 }

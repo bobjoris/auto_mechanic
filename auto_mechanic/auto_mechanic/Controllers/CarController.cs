@@ -10,7 +10,7 @@ using System.Web;
 using System.Web.Http;
 using auto_mechanic.BLL;
 using Newtonsoft.Json;
-using System.Web.Script.Serialization;
+using auto_mechanic.Models;
 
 namespace auto_mechanic.Controllers
 {
@@ -23,20 +23,11 @@ namespace auto_mechanic.Controllers
         {
             var car = db.Car.ToList();
 
-
-            string res = JsonConvert.SerializeObject(car, Formatting.Indented, new JsonSerializerSettings
-            {
-                ReferenceLoopHandling = ReferenceLoopHandling.Ignore
-            });
-
-            return new HttpResponseMessage()
-            {
-                Content = new StringContent(res),
-            };
+            return Tools.JsonResponse(car);
         }
 
         // GET api/Car/5
-        public Car GetCar(int id)
+        public HttpResponseMessage GetCar(int id)
         {
             Car car = db.Car.Find(id);
             if (car == null)
@@ -44,7 +35,7 @@ namespace auto_mechanic.Controllers
                 throw new HttpResponseException(Request.CreateResponse(HttpStatusCode.NotFound));
             }
 
-            return car;
+            return Tools.JsonResponse(car);
         }
 
         // PUT api/Car/5

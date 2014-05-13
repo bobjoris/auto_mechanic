@@ -16,14 +16,12 @@ namespace auto_mechanic.BLL
     {
         public ServiceBook()
         {
-            this.Car = new HashSet<Car>();
             this.Service = new HashSet<Service>();
         }
     
         public int ID { get; set; }
         public string Name { get; set; }
     
-        public virtual ICollection<Car> Car { get; set; }
         public virtual ICollection<Service> Service { get; set; }
     }
 }

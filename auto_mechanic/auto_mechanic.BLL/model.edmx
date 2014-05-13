@@ -275,7 +275,6 @@
           </Key>
           <Property Type="Int32" Name="ID" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Type="String" Name="Name" Nullable="false" />
-          <NavigationProperty Name="Mechanic" Relationship="AutomechanicsModel.FranchiseMechanic" FromRole="Franchise" ToRole="Mechanic" />
         </EntityType>
         <Association Name="FranchiseMechanic">
           <End Type="AutomechanicsModel.Franchise" Role="Franchise" Multiplicity="1" />
@@ -297,7 +296,6 @@
           <Property Type="String" Name="Label" Nullable="false" />
           <Property Type="Int32" Name="KM" Nullable="false" />
           <NavigationProperty Name="Mechanic_Service" Relationship="AutomechanicsModel.ServiceMechanic_Service" FromRole="Service" ToRole="Mechanic_Service" />
-          <NavigationProperty Name="ServiceBook" Relationship="AutomechanicsModel.ServiceBookService" FromRole="Service" ToRole="ServiceBook" />
         </EntityType>
         <EntityType Name="Mechanic_Service">
           <Key>
@@ -351,7 +349,6 @@
           </Key>
           <Property Type="Int32" Name="ID" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Type="String" Name="Name" Nullable="false" />
-          <NavigationProperty Name="Car" Relationship="AutomechanicsModel.BrandCar" FromRole="Brand" ToRole="Car" />
         </EntityType>
         <Association Name="BrandCar">
           <End Type="AutomechanicsModel.Brand" Role="Brand" Multiplicity="1" />
@@ -371,7 +368,6 @@
           </Key>
           <Property Type="Int32" Name="ID" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Type="String" Name="Name" Nullable="false" />
-          <NavigationProperty Name="Car" Relationship="AutomechanicsModel.ServiceBookCar" FromRole="ServiceBook" ToRole="Car" />
           <NavigationProperty Name="Service" Relationship="AutomechanicsModel.ServiceBookService" FromRole="ServiceBook" ToRole="Service" />
         </EntityType>
         <Association Name="ServiceBookCar">
@@ -398,7 +394,6 @@
           <Property Type="Int32" Name="MechanicID" Nullable="false" />
           <Property Type="DateTime" Name="StartDate" Nullable="false" />
           <Property Type="DateTime" Name="EndDate" Nullable="false" />
-          <NavigationProperty Name="Mechanic" Relationship="AutomechanicsModel.MechanicHoliday" FromRole="Holiday" ToRole="Mechanic" />
         </EntityType>
         <Association Name="MechanicHoliday">
           <End Type="AutomechanicsModel.Mechanic" Role="Mechanic" Multiplicity="1" />

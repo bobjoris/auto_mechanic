@@ -17,7 +17,6 @@ namespace auto_mechanic.BLL
         public Service()
         {
             this.Mechanic_Service = new HashSet<Mechanic_Service>();
-            this.ServiceBook = new HashSet<ServiceBook>();
         }
     
         public int ID { get; set; }
@@ -25,6 +24,5 @@ namespace auto_mechanic.BLL
         public int KM { get; set; }
     
         public virtual ICollection<Mechanic_Service> Mechanic_Service { get; set; }
-        public virtual ICollection<ServiceBook> ServiceBook { get; set; }
     }
 }
