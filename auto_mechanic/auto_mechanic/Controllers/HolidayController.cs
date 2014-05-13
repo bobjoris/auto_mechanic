@@ -9,6 +9,7 @@ using System.Net.Http;
 using System.Web;
 using System.Web.Http;
 using auto_mechanic.BLL;
+using auto_mechanic.Models;
 
 namespace auto_mechanic.Controllers
 {
@@ -17,14 +18,14 @@ namespace auto_mechanic.Controllers
         private AutomechanicsEntities db = new AutomechanicsEntities();
 
         // GET api/Holiday
-        public IEnumerable<Holiday> GetHolidays()
+        public HttpResponseMessage GetHolidays()
         {
-            var holiday = db.Holiday.Include(h => h.Mechanic);
-            return holiday.AsEnumerable();
+            var holiday = db.Holiday.Include("Mechanic");
+            return Tools.JsonResponse(holiday.AsEnumerable());
         }
 
         // GET api/Holiday/5
-        public Holiday GetHoliday(int id)
+        public HttpResponseMessage GetHoliday(int id)
         {
             Holiday holiday = db.Holiday.Find(id);
             if (holiday == null)
@@ -32,7 +33,7 @@ namespace auto_mechanic.Controllers
                 throw new HttpResponseException(Request.CreateResponse(HttpStatusCode.NotFound));
             }
 
-            return holiday;
+            return Tools.JsonResponse(holiday);
         }
 
         // PUT api/Holiday/5

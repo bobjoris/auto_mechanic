@@ -9,6 +9,7 @@ using System.Net.Http;
 using System.Web;
 using System.Web.Http;
 using auto_mechanic.BLL;
+using auto_mechanic.Models;
 
 namespace auto_mechanic.Controllers
 {
@@ -17,9 +18,9 @@ namespace auto_mechanic.Controllers
         private AutomechanicsEntities db = new AutomechanicsEntities();
 
         // GET api/Service
-        public IEnumerable<Service> GetServices()
+        public HttpResponseMessage GetServices()
         {
-            return db.Service.AsEnumerable();
+            return Tools.JsonResponse(db.Service.AsEnumerable());
         }
 
         // GET api/Service/5

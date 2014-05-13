@@ -30,9 +30,9 @@ namespace auto_mechanic.Models
             return JsonConvert.SerializeObject(obj, Formatting.Indented, new JsonSerializerSettings
             {
                 PreserveReferencesHandling = PreserveReferencesHandling.None,
-                 NullValueHandling = NullValueHandling.Ignore,
-                 MissingMemberHandling = MissingMemberHandling.Ignore,
-                 ReferenceLoopHandling = ReferenceLoopHandling.Ignore
+                NullValueHandling = NullValueHandling.Ignore,
+                MissingMemberHandling = MissingMemberHandling.Ignore,
+                ReferenceLoopHandling = ReferenceLoopHandling.Ignore
 
             });
         }

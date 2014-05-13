@@ -9,6 +9,7 @@ using System.Net.Http;
 using System.Web;
 using System.Web.Http;
 using auto_mechanic.BLL;
+using auto_mechanic.Models;
 
 namespace auto_mechanic.Controllers
 {
@@ -17,13 +18,13 @@ namespace auto_mechanic.Controllers
         private AutomechanicsEntities db = new AutomechanicsEntities();
 
         // GET api/Franchise
-        public IEnumerable<Franchise> GetFranchises()
+        public HttpResponseMessage GetFranchises()
         {
-            return db.Franchise.AsEnumerable();
+            return Tools.JsonResponse(db.Franchise.AsEnumerable());
         }
 
         // GET api/Franchise/5
-        public Franchise GetFranchise(int id)
+        public HttpResponseMessage GetFranchise(int id)
         {
             Franchise franchise = db.Franchise.Find(id);
             if (franchise == null)
@@ -31,7 +32,7 @@ namespace auto_mechanic.Controllers
                 throw new HttpResponseException(Request.CreateResponse(HttpStatusCode.NotFound));
             }
 
-            return franchise;
+            return Tools.JsonResponse(franchise);
         }
 
         // PUT api/Franchise/5
