@@ -36,6 +36,16 @@ namespace auto_mechanic.Controllers
             return View();
         }
 
+        public ActionResult Services()
+        {
+            return View();
+        }
+
+        public ActionResult ServiceBooks()
+        {
+            return View();
+        }
+
         public ActionResult Navbar()
         {
             return View();

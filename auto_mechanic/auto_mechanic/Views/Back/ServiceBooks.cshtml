@@ -1,0 +1,63 @@
+﻿  @{
+     Layout = null;
+   }
+<ng-include src="'back/navbar'"></ng-include>
+<div class="row" ng-controller="ServiceBookCtrl">
+  <div class="col-md-6">
+    <div class="panel panel-default">
+      <div class="panel-heading">Liste des carnets d'entretien</div>
+      <table class="table table-bordered">
+        <thead>
+          <tr>
+            <th>Nom</th>
+            <th>Opérations</th>
+            <th>Action</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr ng-repeat="servicebook in servicebooks">
+            <th>{{servicebook.Name}}</th>
+              <td>
+                  <ul>
+                    <li ng-repeat="service in servicebook.Service">{{service.Label}} ({{service.KM}}) </li>
+                  </ul>
+              </td>
+            <th class="tcenter">
+              <div class="btn-group">
+                <a ng-click="edit(servicebook)" class="btn btn-default btn-xs">
+                  <span class="glyphicon glyphicon-pencil"></span>
+                </a>
+                <a ng-click="delete(servicebook)" class="btn btn-danger btn-xs">
+                  <span class="glyphicon glyphicon-trash"></span>
+                </a>
+              </div>
+            </th>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+  <div class="col-md-6">
+    <div class="panel panel-default">
+      <div class="panel-heading">Ajouter un carnet d'entretien</div>
+      <div class="panel-body">
+        <form name="servicebookForm" role="form" ng-submit="add(servicebookForm)">
+          <div class="form-group">
+            <label for="inputServiceBookName">Nom</label>
+            <span ng-show="servicebookForm.name.$invalid && !servicebookForm.name.$pristine" class="help-block error"><small>Veuillez entrer un nom d'opération.</small></span>
+            <input type="text" ng-model="servicebook.name" name="name" class="form-control" id="inputServiceBookName" placeholder="Nom du carnet d'entretien" required>
+            </div>
+            <div class="form-group" style="max-height: 250px; overflow-y: auto">
+                <label>Opérations à ajouter</label>
+                <ul>
+                    <li ng-repeat="service in services">
+                        <label><input type="checkbox" checklist-model="servicebook.Service" checklist-value="service" /> {{service.Label}} - {{service.KM}}</label>
+                    </li>
+                </ul>
+          </div>
+          <button ng-disabled="servicebookForm.$invalid" type="submit" class="btn btn-success">Ajouter le carnet d'entretien</button>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>

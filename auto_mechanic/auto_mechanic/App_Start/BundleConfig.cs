@@ -20,8 +20,8 @@ namespace auto_mechanic
 
             bundles.Add(new ScriptBundle("~/bundles/angular").Include(
                     "~/Scripts/angular.js", "~/Scripts/angular-resource.js", 
-                    "~/Scripts/angular-cookies.js", "~/Scripts/angular-sanitize.js", 
-                    "~/Scripts/angular-route.js", "~/Scripts/underscore.js"
+                    "~/Scripts/angular-cookies.js", "~/Scripts/angular-sanitize.js",
+                    "~/Scripts/angular-route.js", "~/Scripts/checklist-model.js", "~/Scripts/underscore.js"
                 ));
 
             bundles.Add(new ScriptBundle("~/bundles/bootstrap").Include(

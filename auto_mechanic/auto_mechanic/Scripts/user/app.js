@@ -5,7 +5,8 @@ angular
     'ngCookies',
     'ngResource',
     'ngSanitize',
-    'ngRoute'
+    'ngRoute',
+    'checklist-model'
   ])
   .config(function ($routeProvider) {
       $routeProvider
@@ -23,6 +24,14 @@ angular
         })
         .when('/franchises', {
             templateUrl: 'back/franchises',
+            controller: 'MainCtrl'
+        })
+        .when('/services', {
+            templateUrl: 'back/services',
+            controller: 'MainCtrl'
+        })
+        .when('/servicebooks', {
+            templateUrl: 'back/servicebooks',
             controller: 'MainCtrl'
         })
         .otherwise({

@@ -67,6 +67,13 @@ namespace auto_mechanic.Controllers
         {
             if (ModelState.IsValid)
             {
+                List<Service> serv = servicebook.Service.ToList();
+                servicebook.Service.Clear();
+                foreach (var s in serv)
+                {
+                    Service service = db.Service.Where(x => x.ID == s.ID).FirstOrDefault();
+                    servicebook.Service.Add(service);
+                }
                 db.ServiceBook.Add(servicebook);
                 db.SaveChanges();
 
@@ -89,6 +96,8 @@ namespace auto_mechanic.Controllers
                 return Request.CreateResponse(HttpStatusCode.NotFound);
             }
 
+            servicebook.Service.Clear();
+            db.SaveChanges();
             db.ServiceBook.Remove(servicebook);
 
             try

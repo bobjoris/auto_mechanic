@@ -89,6 +89,11 @@ namespace auto_mechanic.Controllers
                 return Request.CreateResponse(HttpStatusCode.NotFound);
             }
 
+            List<Mechanic_Service> lms = db.Mechanic_Service.Where(x => x.ServiceID == id).ToList();
+            foreach (var ms in lms)
+            {
+                db.Mechanic_Service.Remove(ms);
+            }
             db.Service.Remove(service);
 
             try
