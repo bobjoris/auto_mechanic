@@ -1,0 +1,49 @@
+﻿  @{
+     Layout = null;
+   }
+<ng-include src="'back/navbar'"></ng-include>
+<div class="row" ng-controller="FranchiseCtrl">
+  <div class="col-md-6">
+    <div class="panel panel-default">
+      <div class="panel-heading">Liste des Franchises</div>
+      <table class="table table-bordered">
+        <thead>
+          <tr>
+            <th>Nom</th>
+            <th>Action</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr ng-repeat="franchise in franchises">
+            <th>{{franchise.Name}}</th>
+            <th class="tcenter">
+              <div class="btn-group">
+                <a ng-click="edit(franchise)" class="btn btn-default btn-xs">
+                  <span class="glyphicon glyphicon-pencil"></span>
+                </a>
+                <a ng-click="delete(franchise)" class="btn btn-danger btn-xs">
+                  <span class="glyphicon glyphicon-trash"></span>
+                </a>
+              </div>
+            </th>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+  <div class="col-md-6">
+    <div class="panel panel-default">
+      <div class="panel-heading">Ajouter une franchise</div>
+      <div class="panel-body">
+        <form name="franchiseForm" role="form" ng-submit="add(franchiseForm)">
+          <div class="form-group">
+            <label for="inputFranchiseName">Nom</label>
+            <span ng-show="franchiseForm.name.$invalid && !franchiseForm.name.$pristine" class="help-block error"><small>Veuillez entrer un nom de franchise.</small></span>
+            <input type="text" ng-model="franchise.name" name="name" class="form-control" id="inputFranchiseName" placeholder="Nom de la franchise" required>
+          </div>
+          <button ng-disabled="franchiseForm.$invalid" type="submit" class="btn btn-success">Ajouter la franchise</button>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>

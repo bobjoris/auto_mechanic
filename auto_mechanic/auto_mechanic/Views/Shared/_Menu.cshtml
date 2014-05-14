@@ -1,0 +1,33 @@
+﻿<div>
+  <ul class="nav nav-pills inner-page-nav">
+    <li ng-class="{active:isActive(['/cars', '/brands'])}" class="dropdown"><a class="dropdown-toggle" data-toggle="dropdown" href="#">Voitures <span class="caret"></span></a>
+      <ul class="dropdown-menu" role="menu">
+        <li><a href="/#/cars">Modèle</a></li>
+        <li><a href="/#/brands">Marque</a></li>
+      </ul>
+    </li>
+    <li ng-class="{active:isActive(['/mechanics', '/franchises'])}" class="dropdown">
+      <a class="dropdown-toggle" data-toggle="dropdown" href="#">
+        Garages <span class="caret"></span>
+      </a>
+      <ul class="dropdown-menu" role="menu">
+        <li><a href="/#/mechanics">Garagiste</a></li>
+        <li><a href="/#/franchises">Franchise</a></li>
+      </ul>
+    </li>
+
+    <li ng-class="{active:isActive(['/service', '/servicebook'])}" class="dropdown">
+      <a class="dropdown-toggle" data-toggle="dropdown" href="#">
+        Opération <span class="caret"></span>
+      </a>
+      <ul class="dropdown-menu" role="menu">
+        <li><a href="/#/mechanics">Révisions</a></li>
+        <li><a href="/#/franchises">Carnet d'entretiens</a></li>
+      </ul>
+    </li>
+  </ul>
+</div>
+<hr />
+<script>
+  $('.dropdown-toggle').dropdown();
+</script>

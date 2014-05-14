@@ -1,0 +1,49 @@
+﻿  @{
+     Layout = null;
+   }
+<ng-include src="'back/navbar'"></ng-include>
+<div class="row" ng-controller="BrandCtrl">
+  <div class="col-md-6">
+    <div class="panel panel-default">
+      <div class="panel-heading">Liste des marques</div>
+      <table class="table table-bordered">
+        <thead>
+          <tr>
+            <th>Nom</th>
+            <th>Action</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr ng-repeat="brand in brands">
+            <th>{{brand.Name}}</th>
+            <th class="tcenter">
+              <div class="btn-group">
+                <a ng-click="edit(brand)" class="btn btn-default btn-xs">
+                  <span class="glyphicon glyphicon-pencil"></span>
+                </a>
+                <a ng-click="delete(brand)" class="btn btn-danger btn-xs">
+                  <span class="glyphicon glyphicon-trash"></span>
+                </a>
+              </div>
+            </th>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+  <div class="col-md-6">
+    <div class="panel panel-default">
+      <div class="panel-heading">Ajouter une marque</div>
+      <div class="panel-body">
+        <form name="brandForm" role="form" ng-submit="add(brandForm)">
+          <div class="form-group">
+            <label for="inputBrandName">Nom</label>
+            <span ng-show="brandForm.name.$invalid && !brandForm.name.$pristine" class="help-block error"><small>Veuillez entrer un nom de marque.</small></span>
+            <input type="text" ng-model="brand.name" name="name" class="form-control" id="inputBrandName" placeholder="Nom de la marque" required>
+          </div>
+          <button ng-disabled="brandForm.$invalid" type="submit" class="btn btn-success">Ajouter la marque</button>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>

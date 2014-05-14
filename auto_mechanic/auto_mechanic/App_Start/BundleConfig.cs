@@ -27,6 +27,9 @@ namespace auto_mechanic
             bundles.Add(new ScriptBundle("~/bundles/bootstrap").Include(
                         "~/Scripts/bootstrap.js"));
 
+            bundles.Add(new ScriptBundle("~/bundles/user").Include(
+                        "~/Scripts/user/app.js", "~/Scripts/user/controllers/main.js", "~/Scripts/user/controllers/*.js", "~/Scripts/user/services/*.js"));
+
             // Utilisez la version de développement de Modernizr pour développer et apprendre. Puis, lorsque vous êtes
             // prêt pour la production, utilisez l'outil de génération sur http://modernizr.com pour sélectionner uniquement les tests dont vous avez besoin.
             bundles.Add(new ScriptBundle("~/bundles/modernizr").Include(

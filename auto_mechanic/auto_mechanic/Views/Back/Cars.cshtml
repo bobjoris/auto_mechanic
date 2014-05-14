@@ -1,0 +1,62 @@
+﻿  @{
+     Layout = null;
+   }
+<ng-include src="'back/navbar'"></ng-include>
+<div class="row" ng-controller="CarCtrl">
+  <div class="col-md-6">
+    <div id="table_id2" class="panel panel-default">
+      <div class="panel-heading">Liste des voitures</div>
+      <table class="table table-bordered">
+        <thead>
+          <tr>
+            <th>Modèle</th>
+            <th>Marque</th>
+            <th>Carnet d’entretien</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr ng-repeat="car in cars">
+            <th>{{car.Name}}</th>
+            <th>{{car.Brand.Name}}</th>
+            <th><a href="#">{{car.ServiceBook.Name}}</a></th>
+            <th class="tcenter">
+              <div class="btn-group">
+                <a ng-click="edit(car)" class="btn btn-default btn-xs">
+                  <span class="glyphicon glyphicon-pencil"></span>
+                </a>
+                <a ng-click="delete(car)" class="btn btn-danger btn-xs">
+                  <span class="glyphicon glyphicon-trash"></span>
+                </a>
+              </div>
+            </th>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+  <div class="col-md-6">
+    <div class="panel panel-default">
+      <div class="panel-heading">Ajouter une voiture</div>
+      <div class="panel-body">
+        <form name="carForm" role="form" ng-submit="add(carForm)">
+          <div class="form-group">
+            <label for="inputCarName">Modèle</label>
+            <span ng-show="carForm.name.$invalid && !carForm.name.$pristine" class="help-block error"><small>Veuillez entrer un nom de modèle.</small></span>
+            <input ng-model="car.name" name="name" type="text" class="form-control" id="inputCarName" placeholder="Nom du modèle" required>
+          </div>
+          <div class="form-group">
+            <label for="selectCarBrand">Marque</label>
+            <select ng-model="car.Brand" ng-options="brand.Name for brand in brands" required id="selectCarBrand" class="form-control"></select>
+          </div>
+          <div class="form-group">
+            <label for="selectServiceBook">Carnet d’entretien</label>
+            <select ng-model="car.ServiceBook" ng-options="sb.Name for sb in servicebooks" required id="selectServiceBook" class="form-control">
+            </select>
+          </div>
+          <button ng-disabled="carForm.$invalid" type="submit" class="btn btn-success">Ajouter la voiture</button>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>

@@ -71,8 +71,9 @@ namespace auto_mechanic.Controllers
             if (ModelState.IsValid)
             {
                 db.Car.Add(car);
+                db.Entry(car.Brand).State = EntityState.Unchanged;
+                db.Entry(car.ServiceBook).State = EntityState.Unchanged;
                 db.SaveChanges();
-
                 HttpResponseMessage response = Request.CreateResponse(HttpStatusCode.Created, car);
                 response.Headers.Location = new Uri(Url.Link("DefaultApi", new { id = car.ID }));
                 return response;

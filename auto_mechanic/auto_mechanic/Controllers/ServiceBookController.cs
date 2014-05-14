@@ -13,43 +13,42 @@ using auto_mechanic.Models;
 
 namespace auto_mechanic.Controllers
 {
-    public class MechanicController : ApiController
+    public class ServiceBookController : ApiController
     {
         private AutomechanicsEntities db = new AutomechanicsEntities();
 
-        // GET api/Default1
-        public HttpResponseMessage GetMechanics()
+        // GET api/ServiceBook
+        public HttpResponseMessage GetServiceBooks()
         {
-            var mechanic = db.Mechanic.Include(m => m.Franchise).Include(m => m.Mechanic_Service);
-            return Tools.JsonResponse(mechanic.AsEnumerable());
+            return Tools.JsonResponse(db.ServiceBook.AsEnumerable());
         }
 
         // GET api/Default1/5
-        public HttpResponseMessage GetMechanic(int id)
+        public ServiceBook GetServiceBook(int id)
         {
-            Mechanic mechanic = db.Mechanic.Find(id);
-            if (mechanic == null)
+            ServiceBook servicebook = db.ServiceBook.Find(id);
+            if (servicebook == null)
             {
                 throw new HttpResponseException(Request.CreateResponse(HttpStatusCode.NotFound));
             }
 
-            return Tools.JsonResponse(mechanic);
+            return servicebook;
         }
 
         // PUT api/Default1/5
-        public HttpResponseMessage PutMechanic(int id, Mechanic mechanic)
+        public HttpResponseMessage PutServiceBook(int id, ServiceBook servicebook)
         {
             if (!ModelState.IsValid)
             {
                 return Request.CreateErrorResponse(HttpStatusCode.BadRequest, ModelState);
             }
 
-            if (id != mechanic.ID)
+            if (id != servicebook.ID)
             {
                 return Request.CreateResponse(HttpStatusCode.BadRequest);
             }
 
-            db.Entry(mechanic).State = EntityState.Modified;
+            db.Entry(servicebook).State = EntityState.Modified;
 
             try
             {
@@ -64,16 +63,15 @@ namespace auto_mechanic.Controllers
         }
 
         // POST api/Default1
-        public HttpResponseMessage PostMechanic(Mechanic mechanic)
+        public HttpResponseMessage PostServiceBook(ServiceBook servicebook)
         {
             if (ModelState.IsValid)
             {
-                db.Mechanic.Add(mechanic);
-                db.Entry(mechanic.Franchise).State = EntityState.Unchanged;
+                db.ServiceBook.Add(servicebook);
                 db.SaveChanges();
 
-                HttpResponseMessage response = Request.CreateResponse(HttpStatusCode.Created, mechanic);
-                response.Headers.Location = new Uri(Url.Link("DefaultApi", new { id = mechanic.ID }));
+                HttpResponseMessage response = Request.CreateResponse(HttpStatusCode.Created, servicebook);
+                response.Headers.Location = new Uri(Url.Link("DefaultApi", new { id = servicebook.ID }));
                 return response;
             }
             else
@@ -83,15 +81,15 @@ namespace auto_mechanic.Controllers
         }
 
         // DELETE api/Default1/5
-        public HttpResponseMessage DeleteMechanic(int id)
+        public HttpResponseMessage DeleteServiceBook(int id)
         {
-            Mechanic mechanic = db.Mechanic.Find(id);
-            if (mechanic == null)
+            ServiceBook servicebook = db.ServiceBook.Find(id);
+            if (servicebook == null)
             {
                 return Request.CreateResponse(HttpStatusCode.NotFound);
             }
 
-            db.Mechanic.Remove(mechanic);
+            db.ServiceBook.Remove(servicebook);
 
             try
             {
@@ -102,7 +100,7 @@ namespace auto_mechanic.Controllers
                 return Request.CreateErrorResponse(HttpStatusCode.NotFound, ex);
             }
 
-            return Request.CreateResponse(HttpStatusCode.OK, mechanic);
+            return Request.CreateResponse(HttpStatusCode.OK, servicebook);
         }
 
         protected override void Dispose(bool disposing)
