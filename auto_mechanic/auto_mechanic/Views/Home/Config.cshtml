@@ -4,18 +4,18 @@
 }
 <h1>Configuration de la simulation</h1>
 
-<div class="row">
+<div class="row" ng-controller="ConfigCtrl">
     <div class="col-md-8">
         <div class="panel panel-primary">
             <div class="panel-heading">Paramètres</div>
             <div class="panel-body">
                 <form name="brandForm" role="form">
                     <div class="form-group">
-                        <label for="inputBeginDate">Date commencement</label>
+                        <label for="inputBeginDate">Date de commencement</label>
                         <input type="date" id="inputBeginDate" class="form-control" required />
                     </div>
                     <div class="form-group">
-                        <label for="rangeDuration">Durée</label>
+                        <label for="inputDuration">Durée</label>
                         <div class="row">
                             <div class="col-md-10">
                                 <input type="range" min="1" max="100" value="1" step="1" id="rangeDuration" class="form-control" />
@@ -25,9 +25,62 @@
                             </div>
                         </div>
                     </div>
+                    <hr />
+                    <div class="form-group">
+                        <label>Véhicules</label>
+                        <ul class="nav nav-tabs" id="myTab">
+                            <li class="active"><a href="#tabbrand" data-toggle="tab">Marque</a></li>
+                            <li><a href="#tabcars" data-toggle="tab">Modèle</a></li>
+                        </ul>
+                        <div class="tab-content">
+                            <div class="tab-pane fade in active" id="tabbrand">
+                                <table class="table">
+                                    <thead>
+                                        <tr>
+                                            <th>Marque</th>
+                                            <th>Quantité</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr ng-repeat="brand in brands | orderBy: 'Name'">
+                                            <td class="text-center">{{ brand.Name }}</td>
+                                            <td><input type="number" class="form-control" value="0" min="0" max="100" /></td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                            <div class="tab-pane fade" id="tabcars">
+                                <table class="table">
+                                    <thead>
+                                        <tr>
+                                            <th>Modèle</th>
+                                            <th>Quantité</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr ng-repeat="car in cars | orderBy: ['Brand.Name','Name']">
+                                            <td class="text-center"><small>{{ car.Brand.Name }}</small> {{ car.Name }} </td>
+                                            <td><input type="number" class="form-control" value="0" min="0" max="100" /></td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                    <hr />
+                    <div class="form-group">
+
+                    </div>
+                     <button type="submit" class="btn btn-success">Lancer la simulation</button>
                 </form>
             </div>
         </div>
+    </div>
+    <div class="col-md-4">
+         <div class="panel panel-default">
+            <div class="panel-heading">Résultats précédents</div>
+             <div class="panel-body"></div>
+          </div>
     </div>
 </div>
 <script>
@@ -39,5 +92,10 @@
         $('#inputDuration').change(function () {
             $('#rangeDuration').val($(this).val());
         });
+
+        $('#myTab a').click(function (e) {
+            e.preventDefault()
+            $(this).tab('show')
+        })
     })
 </script>
