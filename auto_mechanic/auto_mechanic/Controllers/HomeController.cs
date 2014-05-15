@@ -15,7 +15,7 @@ namespace auto_mechanic.Controllers
             return View();
         }
 
-        public ActionResult About()
+        public ActionResult Config()
         {
             return View();
         }

@@ -72,6 +72,17 @@ namespace auto_mechanic.Controllers
                 db.Entry(mechanic.Franchise).State = EntityState.Unchanged;
                 db.SaveChanges();
 
+                foreach (Service service in db.Service)
+                {
+                    Mechanic_Service mechnanic_service = new Mechanic_Service();
+                    mechnanic_service.MechanicID = mechanic.ID;
+                    mechnanic_service.ServiceID = service.ID;
+                    mechnanic_service.Duration = findServiceDuration(service);
+                    db.Mechanic_Service.Add(mechnanic_service);
+                }
+
+                db.SaveChanges();
+
                 HttpResponseMessage response = Request.CreateResponse(HttpStatusCode.Created, mechanic);
                 response.Headers.Location = new Uri(Url.Link("DefaultApi", new { id = mechanic.ID }));
                 return response;
@@ -89,6 +100,11 @@ namespace auto_mechanic.Controllers
             if (mechanic == null)
             {
                 return Request.CreateResponse(HttpStatusCode.NotFound);
+            }
+            List<Mechanic_Service> mcList = db.Mechanic_Service.Where(x => x.MechanicID == mechanic.ID).ToList();
+            foreach (Mechanic_Service mc in mcList)
+            {
+                db.Mechanic_Service.Remove(mc);
             }
 
             db.Mechanic.Remove(mechanic);
@@ -109,6 +125,13 @@ namespace auto_mechanic.Controllers
         {
             db.Dispose();
             base.Dispose(disposing);
+        }
+
+        private int findServiceDuration(Service service)
+        {
+            Mechanic_Service ms = db.Mechanic_Service.Where(x => x.ServiceID == service.ID).FirstOrDefault();
+
+            return (ms == null) ? 1 : ms.Duration;
         }
     }
 }

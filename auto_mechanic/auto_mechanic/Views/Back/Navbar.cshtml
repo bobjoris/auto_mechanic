@@ -3,6 +3,15 @@
    }
 <div>
   <ul class="nav nav-pills inner-page-nav">
+       <li ng-class="{active:isActive(['/mechanics', '/franchises'])}" class="dropdown">
+      <a class="dropdown-toggle" data-toggle="dropdown" href="#">
+        Garages <span class="caret"></span>
+      </a>
+      <ul class="dropdown-menu" role="menu">
+        <li><a href="/#/franchises">Franchise</a></li>
+        <li><a href="/#/mechanics">Garagiste</a></li>
+      </ul>
+    </li>
      <li ng-class="{active:isActive(['/services', '/servicebooks'])}" class="dropdown">
       <a class="dropdown-toggle" data-toggle="dropdown" href="#">
         Opérations <span class="caret"></span>
@@ -18,15 +27,7 @@
         <li><a href="/#/cars">Modèle</a></li>
       </ul>
     </li>
-    <li ng-class="{active:isActive(['/mechanics', '/franchises'])}" class="dropdown">
-      <a class="dropdown-toggle" data-toggle="dropdown" href="#">
-        Garages <span class="caret"></span>
-      </a>
-      <ul class="dropdown-menu" role="menu">
-        <li><a href="/#/franchises">Franchise</a></li>
-        <li><a href="/#/mechanics">Garagiste</a></li>
-      </ul>
-    </li>
+
   </ul>
 </div>
 <hr />

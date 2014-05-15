@@ -49,7 +49,7 @@
             </div>
             <div class="form-group" style="max-height: 250px; overflow-y: auto">
                 <label>Opérations à ajouter</label>
-                <ul>
+                <ul class="list-unstyled">
                     <li ng-repeat="service in services">
                         <label><input type="checkbox" checklist-model="servicebook.Service" checklist-value="service" /> {{service.Label}} - {{service.KM}}</label>
                     </li>

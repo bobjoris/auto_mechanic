@@ -17,7 +17,7 @@ angular.module('simulationApp')
     };
     $scope.delete = function (mechanic) {
       Mechanics.delete(mechanic, function(){
-      $scope.cars = _.without($scope.mechanics, mechanic);
+      $scope.mechanics = _.without($scope.mechanics, mechanic);
       });
     };
   });

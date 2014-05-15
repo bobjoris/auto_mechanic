@@ -67,7 +67,24 @@ namespace auto_mechanic.Controllers
         {
             if (ModelState.IsValid)
             {
+                // Récupération de la durée
+                string[] splitLabel = service.Label.Split('#');
+
+                service.Label = splitLabel[0];
+                int duration = Int32.Parse(splitLabel[1]);
+
                 db.Service.Add(service);
+                db.SaveChanges();
+
+                foreach (Mechanic mechanic in db.Mechanic)
+                {
+                    Mechanic_Service mechnanic_service = new Mechanic_Service();
+                    mechnanic_service.MechanicID = mechanic.ID;
+                    mechnanic_service.ServiceID = service.ID;
+                    mechnanic_service.Duration = duration;
+                    db.Mechanic_Service.Add(mechnanic_service);
+                }
+
                 db.SaveChanges();
 
                 HttpResponseMessage response = Request.CreateResponse(HttpStatusCode.Created, service);

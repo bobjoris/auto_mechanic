@@ -28,8 +28,8 @@
         </div>
         <div class="collapse navbar-collapse" id="navbar-collapse">
           <ul class="nav navbar-nav navbar-right">
-            <li class="active"><a href="#">Configurer les simulations</a></li>
-            <li><a href="#">Lancer une simulation</a></li>
+            <li class="topMenu active"><a class="topLink" href="#/franchises">Configurer les simulations</a></li>
+            <li class="topMenu"><a class="topLink" href="#/simuconf">Lancer une simulation</a></li>
           </ul>
         </div
       </div>
@@ -44,7 +44,18 @@
         <p>par Claudia Tanase, Joris Girardot, Maxence Ory et Thomas Eschemann</p>
       </div>
     </div>
-              @Scripts.Render("~/bundles/angular")
+      <script>
+          $(document).ready(function () {
+              $('.topLink').click(function () {
+                  var $topMenu = $(this).parent();
+
+                  $('.topMenu').removeClass('active');
+
+                  $topMenu.addClass('active');
+              });
+          });
+      </script>
+      @Scripts.Render("~/bundles/angular")
       @Scripts.Render("~/bundles/user")
         @RenderSection("scripts", required: false)
     </body>

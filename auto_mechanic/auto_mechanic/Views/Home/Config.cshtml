@@ -1,0 +1,43 @@
+﻿@{
+    Layout = null;
+    ViewBag.Title = "Contact";
+}
+<h1>Configuration de la simulation</h1>
+
+<div class="row">
+    <div class="col-md-8">
+        <div class="panel panel-primary">
+            <div class="panel-heading">Paramètres</div>
+            <div class="panel-body">
+                <form name="brandForm" role="form">
+                    <div class="form-group">
+                        <label for="inputBeginDate">Date commencement</label>
+                        <input type="date" id="inputBeginDate" class="form-control" required />
+                    </div>
+                    <div class="form-group">
+                        <label for="rangeDuration">Durée</label>
+                        <div class="row">
+                            <div class="col-md-10">
+                                <input type="range" min="1" max="100" value="1" step="1" id="rangeDuration" class="form-control" />
+                            </div>
+                            <div class="col-md-2">
+                                <input type="number" min="1" max="100" class="form-control" id="inputDuration" value="1" />
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    $(document).ready(function () {
+        $('#rangeDuration').mousemove(function () {
+            $('#inputDuration').val($(this).val());
+        });
+
+        $('#inputDuration').change(function () {
+            $('#rangeDuration').val($(this).val());
+        });
+    })
+</script>

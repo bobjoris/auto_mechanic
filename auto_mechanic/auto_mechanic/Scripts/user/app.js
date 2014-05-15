@@ -34,6 +34,10 @@ angular
             templateUrl: 'back/servicebooks',
             controller: 'MainCtrl'
         })
+        .when('/simuconf', {
+            templateUrl: 'home/config',
+            controller: 'MainCtrl'
+        })
         .otherwise({
             redirectTo: '/cars'
         });

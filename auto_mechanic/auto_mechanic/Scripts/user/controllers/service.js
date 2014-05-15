@@ -6,6 +6,7 @@ angular.module('simulationApp')
       $scope.services = Services.query();
 
       $scope.add = function (form) {
+          $scope.service.label = $scope.service.label + '#' + $scope.service.duration;
           $scope.service.$save();
           $scope.services.push($scope.service);
           $scope.service = new Services();
