@@ -18,7 +18,17 @@ namespace auto_mechanic.Controllers
         // GET api/simulation
         public HttpResponseMessage Get()
         {
-            String res = performSimulation(DateTime.Now, 100);
+            String param = "2014-05-19,100;1:2,2:0,4:0,11:0,10:0;6:0,7:0,14:0,27:12,28:0;1,3";
+
+            DateTime dt = new DateTime();
+            int count = 0;
+            Dictionary<int, int> Brands = new Dictionary<int, int>();
+            Dictionary<int, int> Cars = new Dictionary<int, int>();
+            List<int> Mechanics = new List<int>();
+
+            splitString(param, ref dt, ref count, ref Brands, ref Cars, ref Mechanics);
+
+            String res = performSimulation(dt, count, Brands, Cars, Mechanics);
             return new HttpResponseMessage()
             {
                 Content = new StringContent(res, Encoding.UTF8, "text/plain")
@@ -34,6 +44,16 @@ namespace auto_mechanic.Controllers
         // POST api/simulation
         public void Post([FromBody]string value)
         {
+            DateTime dt = new DateTime();
+            int count= 0;
+            Dictionary<int, int> Brands = new Dictionary<int, int>();
+            Dictionary<int, int> Cars = new Dictionary<int, int>();
+            List<int> Mechanics = new List<int>();
+
+            splitString(value, ref dt, ref count, ref Brands, ref Cars, ref Mechanics);
+
+            this.performSimulation(dt, count, Brands, Cars, Mechanics);
+
         }
 
         // PUT api/simulation/5
@@ -46,7 +66,41 @@ namespace auto_mechanic.Controllers
         {
         }
 
-        private string performSimulation(DateTime date, int dayCount)
+        private void splitString(string value, ref DateTime dt, ref int count, ref Dictionary<int, int> Brands,ref Dictionary<int, int> Cars,ref List<int> Mechanics)
+        {
+            String[] values = value.Split(';');
+
+            //Date
+            String[] date = values[0].Split(',');
+            dt = DateTime.ParseExact(date[0], "yyyy-mm-dd", null);
+            count = int.Parse(date[1]);
+
+            //Marque
+            String[] brands = values[1].Split(',');
+
+            foreach (String b in brands)
+            {
+                Brands.Add(int.Parse(b.Split(':')[0]), int.Parse(b.Split(':')[1]));
+            }
+
+            // Modele
+            String[] cars = values[2].Split(',');
+
+            foreach (String b in cars)
+            {
+                Cars.Add(int.Parse(b.Split(':')[0]), int.Parse(b.Split(':')[1]));
+            }
+
+            // Garagiste
+            String[] mechanics = values[3].Split(',');
+
+            foreach (String m in mechanics)
+            {
+                Mechanics.Add(int.Parse(m));
+            }
+        }
+
+        private string performSimulation(DateTime date, int dayCount, Dictionary<int,int> inputBrands, Dictionary<int,int> inputCars, List<int> inputMechanic)
         {
             StringBuilder res = new StringBuilder();
 
@@ -57,17 +111,36 @@ namespace auto_mechanic.Controllers
             /**
              *  Chargement des voitures
              */
-            
-            // Chargement en fonction du nombre de voiture d'une marque
-            foreach (Car car in db.Car.ToList())
+
+            // Chargement par marque
+            foreach (var pair in inputBrands)
             {
-                for (int i = 0; i < 15; i++ )
+                List<Car> carsBrands = db.Car.Where(x => x.BrandID == pair.Key).ToList();
+                int limit = carsBrands.Count - 1;
+                for (int i = 0; i < pair.Value; i++)
+                {
+                    Random r = new Random();
+                    listCars.Add(new SimCar(carsBrands[r.Next(0, limit)]));
+                }
+            }
+            
+            // Chargement par model
+            foreach (var pair in inputCars)
+            {
+                Car car = db.Car.Where(x => x.ID == pair.Key).FirstOrDefault();
+                for (int i = 0; i < pair.Value; i++)
+                {
                     listCars.Add(new SimCar(car));
+                }
             }
 
             // Chargement des mécanicien
-            foreach(Mechanic mechanic in db.Mechanic.ToList())
+            foreach (int mechanicID in inputMechanic)
+            {
+                Mechanic mechanic = db.Mechanic.Where(x => x.ID == mechanicID).FirstOrDefault();
                 mechanics.Add(new SimMechanic(mechanic, date, dayCount));
+            }
+                
 
             res.AppendLine(mechanicsOutput(mechanics));
 
@@ -245,9 +318,12 @@ namespace auto_mechanic.Controllers
                 this.WorkingTime[iteration].TimeRemaining = 0;
 
                 int offset = (weekend) ? 3 : 1;
-                this.WorkingTime[iteration + offset].TimeRemaining -= timeremain;
-                this.WorkingTime[iteration + offset].Cars.Add(car);
-                ref_car.NextDelivery = iteration + offset;
+                if (offset + iteration < this.WorkingTime.Count - 1)
+                {
+                    this.WorkingTime[iteration + offset].TimeRemaining -= timeremain;
+                    this.WorkingTime[iteration + offset].Cars.Add(car);
+                    ref_car.NextDelivery = iteration + offset;
+                }
 
             }
         }

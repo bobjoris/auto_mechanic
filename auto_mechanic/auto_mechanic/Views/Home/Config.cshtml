@@ -44,7 +44,7 @@
                                     <tbody>
                                         <tr ng-repeat="brand in brands | orderBy: 'Name'">
                                             <td class="text-center">{{ brand.Name }}</td>
-                                            <td><input type="number" class="form-control" value="0" min="0" max="100" /></td>
+                                            <td><input type="number" class="form-control countBrand" data-id="{{ brand.ID }}" value="0" min="0" max="100" /></td>
                                         </tr>
                                     </tbody>
                                 </table>
@@ -60,7 +60,7 @@
                                     <tbody>
                                         <tr ng-repeat="car in cars | orderBy: ['Brand.Name','Name']">
                                             <td class="text-center"><small>{{ car.Brand.Name }}</small> {{ car.Name }} </td>
-                                            <td><input type="number" class="form-control" value="0" min="0" max="100" /></td>
+                                            <td><input type="number" class="form-control countCar" data-id="{{ car.ID }}" value="0" min="0" max="100" /></td>
                                         </tr>
                                     </tbody>
                                 </table>
@@ -69,9 +69,23 @@
                     </div>
                     <hr />
                     <div class="form-group">
-
+                        <label>Garagiste</label>
+                         <table class="table">
+                                    <thead>
+                                        <tr>
+                                            <th>Nom</th>
+                                            <th>Sélection</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr ng-repeat="mechanic in mechanics | orderBy: ['Name']">
+                                            <td class="text-center"><label for="{{ mechanic.Name }}">{{ mechanic.Name }}</label></td>
+                                            <td><input type="checkbox" class="chxMechanic" data-idm="{{ mechanic.ID }}" id="{{mechanic.Name}}" /></td>
+                                        </tr>
+                                    </tbody>
+                                </table>
                     </div>
-                     <button type="submit" class="btn btn-success">Lancer la simulation</button>
+                     <button type="submit" ng-click="setSimu()" class="btn btn-success">Lancer la simulation</button>
                 </form>
             </div>
         </div>
