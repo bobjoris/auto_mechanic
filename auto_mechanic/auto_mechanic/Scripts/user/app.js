@@ -14,6 +14,10 @@ angular
             templateUrl: 'back/cars',
             controller: 'MainCtrl'
         })
+        .when('/cars/:id', {
+            templateUrl: 'back/cars',
+            controller: 'MainCtrl'
+        })
         .when('/brands', {
             templateUrl: 'back/brands',
             controller: 'MainCtrl'

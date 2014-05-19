@@ -39,9 +39,10 @@
           <div class="form-group">
             <label for="inputFranchiseName">Nom</label>
             <span ng-show="franchiseForm.name.$invalid && !franchiseForm.name.$pristine" class="help-block error"><small>Veuillez entrer un nom de franchise.</small></span>
-            <input type="text" ng-model="franchise.name" name="name" class="form-control" id="inputFranchiseName" placeholder="Nom de la franchise" required>
+            <input type="text" ng-model="franchise.Name" name="name" class="form-control" id="inputFranchiseName" placeholder="Nom de la franchise" required>
           </div>
-          <button ng-disabled="franchiseForm.$invalid" type="submit" class="btn btn-success">Ajouter la franchise</button>
+          <button ng-disabled="franchiseForm.$invalid" type="submit" class="btn btn-success">{{ labelAdd }}</button>
+            <button ng-show="isEdit" ng-click="cancel()" class="btn btn-danger">Annuler</button>
         </form>
       </div>
     </div>

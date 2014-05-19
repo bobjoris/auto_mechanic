@@ -190,6 +190,7 @@
     <Compile Include="Controllers\HolidayController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ServiceController.cs" />
+    <Compile Include="Controllers\SimulationController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -287,6 +288,7 @@
     <Content Include="Scripts\user\app.js" />
     <Content Include="Scripts\user\controllers\brand.js" />
     <Content Include="Scripts\user\controllers\car.js" />
+    <Content Include="Scripts\user\controllers\config.js" />
     <Content Include="Scripts\user\controllers\franchise.js" />
     <Content Include="Scripts\user\controllers\main.js" />
     <Content Include="Scripts\user\controllers\mechanic.js" />

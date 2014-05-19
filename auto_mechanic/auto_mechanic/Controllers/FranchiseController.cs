@@ -67,7 +67,12 @@ namespace auto_mechanic.Controllers
         {
             if (ModelState.IsValid)
             {
-                db.Franchise.Add(franchise);
+                if (franchise.ID == 0)
+                    db.Franchise.Add(franchise);
+                else
+                {
+                    db.Entry(franchise).State = EntityState.Modified;
+                }
                 db.SaveChanges();
 
                 HttpResponseMessage response = Request.CreateResponse(HttpStatusCode.Created, franchise);
