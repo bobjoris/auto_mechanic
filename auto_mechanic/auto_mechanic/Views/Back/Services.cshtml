@@ -41,19 +41,20 @@
           <div class="form-group">
             <label for="inputserviceName">Nom</label>
             <span ng-show="serviceForm.label.$invalid && !serviceForm.label.$pristine" class="help-block error"><small>Veuillez entrer un nom d'opération.</small></span>
-            <input type="text" ng-model="service.label" name="label" class="form-control" id="inputServiceLabel" placeholder="Libellé de l'opération" required>
+            <input type="text" ng-model="service.Label" name="label" class="form-control" id="inputServiceLabel" placeholder="Libellé de l'opération" required>
             </div>
             <div class="form-group">
               <label for="inputServiceKm">Kilométrage</label>
                 <span ng-show="serviceForm.km.$invalid && !serviceForm.km.$pristine" class="help-block error"><small>Veuillez entrer un kilométrage pour l'opération.</small></span>
-              <input type="number" ng-model="service.km" min="0" name="km" class="form-control" id="inputServiceKm" required />
+              <input type="number" ng-model="service.KM" min="0" name="km" class="form-control" id="inputServiceKm" required />
           </div>
-            <div class="form-group">
+            <div class="form-group"  ng-show="!isEdit">
               <label for="inputServiceDuration">Durée</label>
                 <span ng-show="serviceForm.duration.$invalid && !serviceForm.duration.$pristine" class="help-block error"><small>Veuillez entrer une durée pour l'opération.</small></span>
-              <input type="number" ng-model="service.duration" min="1" name="duration" class="form-control" id="inputServiceDuration" required />
+              <input type="number" ng-model="service.Duration"  name="duration" class="form-control" id="inputServiceDuration"  />
           </div>
-          <button ng-disabled="serviceForm.$invalid" type="submit" class="btn btn-success">Ajouter l'opération</button>
+          <button ng-disabled="(!isEdit && serviceForm.$invalid)" type="submit" class="btn btn-success">{{ labelAdd }}</button>
+            <button ng-show="isEdit" ng-click="cancel()" class="btn btn-danger">Annuler</button>
         </form>
       </div>
     </div>

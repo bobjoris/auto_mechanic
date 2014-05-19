@@ -67,22 +67,43 @@ namespace auto_mechanic.Controllers
         {
             if (ModelState.IsValid)
             {
-                // Récupération de la durée
-                string[] splitLabel = service.Label.Split('#');
+                bool edit = false;
+                int duration = 1;
 
-                service.Label = splitLabel[0];
-                int duration = Int32.Parse(splitLabel[1]);
+                if (service.ID > 0)
+                    edit = true;
 
-                db.Service.Add(service);
-                db.SaveChanges();
-
-                foreach (Mechanic mechanic in db.Mechanic)
+                if (edit)
                 {
-                    Mechanic_Service mechnanic_service = new Mechanic_Service();
-                    mechnanic_service.MechanicID = mechanic.ID;
-                    mechnanic_service.ServiceID = service.ID;
-                    mechnanic_service.Duration = duration;
-                    db.Mechanic_Service.Add(mechnanic_service);
+                    Service serv = db.Service.Where(x => x.ID == service.ID).FirstOrDefault();
+                    if (serv != null)
+                    {
+                        serv.Label = service.Label;
+                        serv.KM = service.KM;
+                    }
+                }
+                else
+                {
+                    // Récupération de la durée
+                    string[] splitLabel = service.Label.Split('#');
+
+                    service.Label = splitLabel[0];
+                    duration = Int32.Parse(splitLabel[1]);
+
+                    db.Service.Add(service);
+                }
+
+                db.SaveChanges();
+                if (!edit)
+                {
+                    foreach (Mechanic mechanic in db.Mechanic)
+                    {
+                        Mechanic_Service mechnanic_service = new Mechanic_Service();
+                        mechnanic_service.MechanicID = mechanic.ID;
+                        mechnanic_service.ServiceID = service.ID;
+                        mechnanic_service.Duration = duration;
+                        db.Mechanic_Service.Add(mechnanic_service);
+                    }
                 }
 
                 db.SaveChanges();

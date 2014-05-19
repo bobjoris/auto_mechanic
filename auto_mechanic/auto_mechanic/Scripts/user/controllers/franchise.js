@@ -9,7 +9,6 @@ angular.module('simulationApp')
       $scope.previous = new Franchises();
 
       $scope.add = function (form) {
-          console.log($scope.franchise.ID);
           $scope.franchise.$save();
 
           if (!$scope.isEdit)
@@ -22,7 +21,6 @@ angular.module('simulationApp')
           $scope.cancel();
           $scope.franchise = franchise;
           $scope.previous = angular.copy(franchise);
-          console.log($scope.previous);
           $scope.isEdit = true;
           $scope.labelAdd = "Modfier";
       };

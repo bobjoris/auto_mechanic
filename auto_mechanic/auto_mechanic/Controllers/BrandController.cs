@@ -67,7 +67,11 @@ namespace auto_mechanic.Controllers
         {
             if (ModelState.IsValid)
             {
-                db.Brand.Add(brand);
+                if (brand.ID == 0)
+                    db.Brand.Add(brand);
+                else
+                    db.Entry(brand).State = EntityState.Modified;
+
                 db.SaveChanges();
 
                 HttpResponseMessage response = Request.CreateResponse(HttpStatusCode.Created, brand);

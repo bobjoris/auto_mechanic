@@ -39,9 +39,10 @@
           <div class="form-group">
             <label for="inputBrandName">Nom</label>
             <span ng-show="brandForm.name.$invalid && !brandForm.name.$pristine" class="help-block error"><small>Veuillez entrer un nom de marque.</small></span>
-            <input type="text" ng-model="brand.name" name="name" class="form-control" id="inputBrandName" placeholder="Nom de la marque" required>
+            <input type="text" ng-model="brand.Name" name="name" class="form-control" id="inputBrandName" placeholder="Nom de la marque" required>
           </div>
-          <button ng-disabled="brandForm.$invalid" type="submit" class="btn btn-success">Ajouter la marque</button>
+          <button ng-disabled="brandForm.$invalid" type="submit" class="btn btn-success">{{ labelAdd }}</button>
+            <button ng-show="isEdit" ng-click="cancel()" class="btn btn-danger">Annuler</button>
         </form>
       </div>
     </div>
