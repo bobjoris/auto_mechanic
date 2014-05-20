@@ -42,6 +42,8 @@ angular.module('simulationApp')
 
       $scope.nextIter = function () {
           $scope.iter += 1;
+          if ($scope.iter >= $scope.simulation['Duration'])
+              $scope.iter -= 1;
           $scope.fillIter($scope.simulation['SimIterJeu'][$scope.iter]);
       }
 

@@ -8,9 +8,11 @@ angular
     'ngRoute',
     'checklist-model'
   ])
-.filter('newlines', function () {
-    return function(text) {
-        return text.replace(/\n/g, '<br/>');
+.filter('formatDate', function () {
+    return function (text) {
+        var s = text.split('-');
+
+        return s[2].slice(0,2) + '-' + s[1] + '-' + s[0];
     };
 })
   .config(function ($routeProvider) {

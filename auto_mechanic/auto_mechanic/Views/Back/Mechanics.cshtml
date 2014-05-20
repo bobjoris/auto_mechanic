@@ -67,8 +67,8 @@
                     <tbody>
                         <tr ng-repeat="h in holidays">
                             <th>{{h.Mechanic.Name}}</th>
-                            <td>{{h.StartDate}}</td>
-                            <td>{{h.EndDate}}</td>
+                            <td>{{h.StartDate | formatDate }}</td>
+                            <td>{{h.EndDate | formatDate }}</td>
                             <th class="tcenter">
                                 <div class="btn-group">
                                     <a ng-click="deleteH(h)" class="btn btn-danger btn-xs">

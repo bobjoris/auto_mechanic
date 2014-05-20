@@ -30,7 +30,7 @@ angular.module('simulationApp')
 
     $scope.deleteH = function (holiday) {
         Holidays.delete(holiday, function () {
-            $scope.holidays = _.without($scope.holidays, holyday);
+            $scope.holidays = _.without($scope.holidays, holiday);
         });
     };
   });

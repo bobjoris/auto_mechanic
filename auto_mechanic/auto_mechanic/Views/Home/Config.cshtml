@@ -99,7 +99,7 @@
                 <div class="panel-heading">Résultats précédents</div>
                 <div class="panel-body">
                     <ul class="list-unstyled">
-                        <li ng-repeat="sm in simulations"><a ng-click="showSimulation(sm)">{{ sm.DateBegin }} ({{ sm.Duration}} jours)</a></li>
+                        <li ng-repeat="sm in simulations"><a ng-click="showSimulation(sm)" style="cursor: pointer">{{ sm.DateBegin | formatDate }} ({{ sm.Duration}} jours)</a></li>
                     </ul>
                 </div>
             </div>

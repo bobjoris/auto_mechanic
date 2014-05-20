@@ -224,7 +224,6 @@ namespace auto_mechanic.Controllers
                     listCars.Add(rCar);
                 }
 
-                dayString.AppendLine("==========================================");
                 dayString.AppendLine(date.ToShortDateString());
                 res.AppendLine(dayString.ToString());
                 res.Append(planningString.ToString());
@@ -276,7 +275,6 @@ namespace auto_mechanic.Controllers
 
         private void WriteLog(string fileName, string Output)
         {
-            FileStream fs = null;
             if (!File.Exists(fileName))
             {
                 File.Create(fileName);
