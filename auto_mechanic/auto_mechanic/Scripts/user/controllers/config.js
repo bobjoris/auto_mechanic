@@ -10,6 +10,7 @@ angular.module('simulationApp')
       $scope.simulationIter = '';
       $scope.drive = '';
       $scope.planning = '';
+      $scope.init = '';
 
       $scope.iter = 0;
 
@@ -24,12 +25,14 @@ angular.module('simulationApp')
               $scope.simulation = angular.fromJson(data);
               $scope.simulations.push($scope.simulation);
               $scope.$apply();
+              $scope.showSimulation($scope.simulation);
           })
       };
 
       $scope.showSimulation = function (simulation) {
           $scope.simulation = simulation;
           $scope.iter = 0;
+          $scope.init = $sce.trustAsHtml($scope.jsonEscape(simulation['Init']));
           $scope.fillIter(simulation['SimIterJeu'][$scope.iter]);
 
           $('html, body').animate({
@@ -39,6 +42,13 @@ angular.module('simulationApp')
 
       $scope.nextIter = function () {
           $scope.iter += 1;
+          $scope.fillIter($scope.simulation['SimIterJeu'][$scope.iter]);
+      }
+
+      $scope.prevIter = function () {
+          $scope.iter -= 1;
+          if ($scope.iter < 0)
+              $scope.iter = 0;
           $scope.fillIter($scope.simulation['SimIterJeu'][$scope.iter]);
       }
 

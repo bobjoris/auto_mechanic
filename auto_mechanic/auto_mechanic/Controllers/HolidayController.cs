@@ -68,8 +68,14 @@ namespace auto_mechanic.Controllers
         {
             if (ModelState.IsValid)
             {
+                Mechanic mechanic = holiday.Mechanic;
+                holiday.MechanicID = holiday.Mechanic.ID;
+                holiday.Mechanic = null;
+
                 db.Holiday.Add(holiday);
                 db.SaveChanges();
+
+                holiday.Mechanic = mechanic;
 
                 HttpResponseMessage response = Request.CreateResponse(HttpStatusCode.Created, holiday);
                 response.Headers.Location = new Uri(Url.Link("DefaultApi", new { id = holiday.ID }));

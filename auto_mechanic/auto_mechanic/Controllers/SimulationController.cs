@@ -72,7 +72,7 @@ namespace auto_mechanic.Controllers
 
             //Date
             String[] date = values[0].Split(',');
-            dt = DateTime.ParseExact(date[0], "yyyy-mm-dd", null);
+            dt = DateTime.ParseExact(date[0], "yyyy-MM-dd", null);
             count = int.Parse(date[1]);
 
             //Marque
@@ -147,7 +147,7 @@ namespace auto_mechanic.Controllers
             }
 
 
-
+            res.AppendLine(carsOutput(listCars));
             res.AppendLine(mechanicsOutput(mechanics));
 
             simu.Init = res.ToString();
@@ -246,6 +246,20 @@ namespace auto_mechanic.Controllers
         }
 
         #region Output
+        private string carsOutput(List<SimCar> list)
+        {
+            StringBuilder res = new StringBuilder();
+
+            res.AppendLine(String.Format("/****** Voitures ********/"));
+            res.AppendLine(String.Format("Nombre de voitures : {0}", list.Count));
+            res.AppendLine("Liste : ");
+            foreach (SimCar scar in list)
+                res.AppendLine(String.Format("\t {0} {1} ({2}km)", scar.Car.Brand.Name, scar.Car.Name, scar.Km));
+            res.AppendLine(String.Format("/******             ********/"));
+
+            return res.ToString();
+        }
+
         private string mechanicsOutput(List<SimMechanic> list)
         {
             StringBuilder res = new StringBuilder();

@@ -1,54 +1,107 @@
-﻿  @{
-     Layout = null;
-   }
+﻿@{
+    Layout = null;
+}
 <ng-include src="'back/navbar'"></ng-include>
-<div class="row" ng-controller="MechanicCtrl">
-  <div class="col-md-6">
-    <div class="panel panel-default">
-      <div class="panel-heading">Liste des garagistes</div>
-      <table class="table table-bordered">
-        <thead>
-          <tr>
-            <th>Nom</th>
-            <th>Franchise</th>
-            <th>Vacances</th>
-            <th>Actions</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr ng-repeat="mechanic in mechanics">
-            <th>{{mechanic.Name}}</th>
-            <th>{{mechanic.Franchise.Name}}</th>
-            <th><a href="#">Accéder</a></th>
-            <th class="tcenter">
-              <div class="btn-group">
-                <a ng-click="delete(mechanic)" class="btn btn-danger btn-xs">
-                  <span class="glyphicon glyphicon-trash"></span>
-                </a>
-              </div>
-            </th>
-          </tr>
-        </tbody>
-      </table>
+<div ng-controller="MechanicCtrl">
+    <div class="row">
+        <div class="col-md-6">
+            <div class="panel panel-default">
+                <div class="panel-heading">Liste des garagistes</div>
+                <table class="table table-bordered">
+                    <thead>
+                        <tr>
+                            <th>Nom</th>
+                            <th>Franchise</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr ng-repeat="mechanic in mechanics">
+                            <th>{{mechanic.Name}}</th>
+                            <th>{{mechanic.Franchise.Name}}</th>
+                            <th class="tcenter">
+                                <div class="btn-group">
+                                    <a ng-click="delete(mechanic)" class="btn btn-danger btn-xs">
+                                        <span class="glyphicon glyphicon-trash"></span>
+                                    </a>
+                                </div>
+                            </th>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="panel panel-default">
+                <div class="panel-heading">Ajouter un garagiste</div>
+                <div class="panel-body">
+                    <form name="mechanicForm" role="form" ng-submit="add(mechanicForm)">
+                        <div class="form-group">
+                            <label for="inputMechanicName">Nom</label>
+                            <span ng-show="mechanicForm.name.$invalid && !mechanicForm.name.$pristine" class="help-block error"><small>Veuillez entrer un nom.</small></span>
+                            <input ng-model="mechanic.Name" name="name" type="text" class="form-control" id="inputMechanicName" placeholder="Nom du méchanicien" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="selectMechanicFranchise">Franchise</label>
+                            <select ng-model="mechanic.Franchise" ng-options="f.Name for f in franchises" id="selectMechanicFranchise" required class="form-control"></select>
+                        </div>
+                        <button ng-disabled="mechanicForm.$invalid" type="submit" class="btn btn-success">Ajouter le garagiste</button>
+                    </form>
+                </div>
+            </div>
+        </div>
     </div>
-  </div>
-  <div class="col-md-6">
-    <div class="panel panel-default">
-      <div class="panel-heading">Ajouter un garagiste</div>
-      <div class="panel-body">
-        <form name="mechanicForm" role="form" ng-submit="add(mechanicForm)">
-          <div class="form-group">
-            <label for="inputMechanicName">Nom</label>
-            <span ng-show="mechanicForm.name.$invalid && !mechanicForm.name.$pristine" class="help-block error"><small>Veuillez entrer un nom.</small></span>
-            <input ng-model="mechanic.Name" name="name" type="text" class="form-control" id="inputMechanicName" placeholder="Nom du méchanicien" required>
-          </div>
-          <div class="form-group">
-            <label for="selectMechanicFranchise">Franchise</label>
-            <select ng-model="mechanic.Franchise" ng-options="f.Name for f in franchises" id="selectMechanicFranchise" required class="form-control"></select>
-          </div>
-          <button ng-disabled="mechanicForm.$invalid" type="submit" class="btn btn-success">Ajouter le garagiste</button>
-        </form>
-      </div>
+    <div class="row">
+        <div class="col-md-6">
+            <div class="panel panel-default">
+                <div class="panel-heading">Liste des vacances</div>
+                <table class="table table-bordered">
+                    <thead>
+                        <tr>
+                            <th>Nom</th>
+                            <th>Date début</th>
+                            <th>Date fin</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr ng-repeat="h in holidays">
+                            <th>{{h.Mechanic.Name}}</th>
+                            <td>{{h.StartDate}}</td>
+                            <td>{{h.EndDate}}</td>
+                            <th class="tcenter">
+                                <div class="btn-group">
+                                    <a ng-click="deleteH(h)" class="btn btn-danger btn-xs">
+                                        <span class="glyphicon glyphicon-trash"></span>
+                                    </a>
+                                </div>
+                            </th>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="panel panel-default">
+                <div class="panel-heading">Ajouter des vacances</div>
+                <div class="panel-body">
+                    <form name="holidayForm" role="form" ng-submit="addH(holidayForm)">
+                        <div class="form-group">
+                            <label for="selectMechanicHoliday">Garagiste</label>
+                            <select ng-model="holiday.Mechanic" ng-options="f.Name for f in mechanics" id="selectMechanicHoliday" required class="form-control"></select>
+                        </div>
+                        <div class="form-group">
+                            <label for="inputBeginDate">Date de commencement</label>
+                            <input type="date" ng-model="holiday.StartDate" id="inputBeginDate" class="form-control" required />
+                        </div>
+                        <div class="form-group">
+                            <label for="inputEndDate">Date de fin</label>
+                            <input type="date" ng-model="holiday.EndDate" id="inputEndDate" class="form-control" required />
+                        </div>
+                        <button ng-disabled="holidayForm.$invalid" type="submit" class="btn btn-success">Ajouter les vacances</button>
+                    </form>
+                </div>
+            </div>
+        </div>
     </div>
-  </div>
 </div>

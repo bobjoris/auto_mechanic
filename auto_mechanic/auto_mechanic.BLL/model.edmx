@@ -435,6 +435,7 @@
           <Property Type="Int32" Name="MechanicID" Nullable="false" />
           <Property Type="DateTime" Name="StartDate" Nullable="false" Precision="3" />
           <Property Type="DateTime" Name="EndDate" Nullable="false" Precision="3" />
+          <NavigationProperty Name="Mechanic" Relationship="AutomechanicsModel.MechanicHoliday" FromRole="Holiday" ToRole="Mechanic" />
         </EntityType>
         <Association Name="MechanicHoliday">
           <End Type="AutomechanicsModel.Mechanic" Role="Mechanic" Multiplicity="1" />

@@ -18,5 +18,7 @@ namespace auto_mechanic.BLL
         public int MechanicID { get; set; }
         public System.DateTime StartDate { get; set; }
         public System.DateTime EndDate { get; set; }
+    
+        public virtual Mechanic Mechanic { get; set; }
     }
 }

@@ -297,6 +297,7 @@
     <Content Include="Scripts\user\services\brands.js" />
     <Content Include="Scripts\user\services\cars.js" />
     <Content Include="Scripts\user\services\franchises.js" />
+    <Content Include="Scripts\user\services\holidays.js" />
     <Content Include="Scripts\user\services\mechanics.js" />
     <Content Include="Scripts\user\services\servicebooks.js" />
     <Content Include="Scripts\user\services\services.js" />
