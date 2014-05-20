@@ -12,17 +12,19 @@ namespace auto_mechanic.BLL
     using System;
     using System.Collections.Generic;
     
-    public partial class Service
+    public partial class SimJeu
     {
-        public Service()
+        public SimJeu()
         {
-            this.ServiceBook = new HashSet<ServiceBook>();
+            this.SimIterJeu = new HashSet<SimIterJeu>();
         }
     
         public int ID { get; set; }
-        public string Label { get; set; }
-        public int KM { get; set; }
+        public System.DateTime DateBegin { get; set; }
+        public string Duration { get; set; }
+        public string Param { get; set; }
+        public string Init { get; set; }
     
-        public virtual ICollection<ServiceBook> ServiceBook { get; set; }
+        public virtual ICollection<SimIterJeu> SimIterJeu { get; set; }
     }
 }

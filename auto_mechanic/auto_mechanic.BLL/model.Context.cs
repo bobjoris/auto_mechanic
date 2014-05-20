@@ -33,5 +33,7 @@ namespace auto_mechanic.BLL
         public DbSet<Brand> Brand { get; set; }
         public DbSet<ServiceBook> ServiceBook { get; set; }
         public DbSet<Holiday> Holiday { get; set; }
+        public DbSet<SimIterJeu> SimIterJeu { get; set; }
+        public DbSet<SimJeu> SimJeu { get; set; }
     }
 }

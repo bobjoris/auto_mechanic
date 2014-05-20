@@ -12,17 +12,14 @@ namespace auto_mechanic.BLL
     using System;
     using System.Collections.Generic;
     
-    public partial class Service
+    public partial class SimIterJeu
     {
-        public Service()
-        {
-            this.ServiceBook = new HashSet<ServiceBook>();
-        }
-    
         public int ID { get; set; }
-        public string Label { get; set; }
-        public int KM { get; set; }
+        public int SimID { get; set; }
+        public string Repair { get; set; }
+        public string Drive { get; set; }
+        public string Planning { get; set; }
     
-        public virtual ICollection<ServiceBook> ServiceBook { get; set; }
+        public virtual SimJeu SimJeu { get; set; }
     }
 }

@@ -86,6 +86,12 @@
     <Compile Include="ServiceBook.cs">
       <DependentUpon>model.tt</DependentUpon>
     </Compile>
+    <Compile Include="SimIterJeu.cs">
+      <DependentUpon>model.tt</DependentUpon>
+    </Compile>
+    <Compile Include="SimJeu.cs">
+      <DependentUpon>model.tt</DependentUpon>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <EntityDeploy Include="model.edmx">

@@ -45,7 +45,7 @@ namespace auto_mechanic.Controllers
         public void Post([FromBody]string value)
         {
             DateTime dt = new DateTime();
-            int count= 0;
+            int count = 0;
             Dictionary<int, int> Brands = new Dictionary<int, int>();
             Dictionary<int, int> Cars = new Dictionary<int, int>();
             List<int> Mechanics = new List<int>();
@@ -66,7 +66,7 @@ namespace auto_mechanic.Controllers
         {
         }
 
-        private void splitString(string value, ref DateTime dt, ref int count, ref Dictionary<int, int> Brands,ref Dictionary<int, int> Cars,ref List<int> Mechanics)
+        private void splitString(string value, ref DateTime dt, ref int count, ref Dictionary<int, int> Brands, ref Dictionary<int, int> Cars, ref List<int> Mechanics)
         {
             String[] values = value.Split(';');
 
@@ -100,8 +100,13 @@ namespace auto_mechanic.Controllers
             }
         }
 
-        private string performSimulation(DateTime date, int dayCount, Dictionary<int,int> inputBrands, Dictionary<int,int> inputCars, List<int> inputMechanic)
+        private string performSimulation(DateTime date, int dayCount, Dictionary<int, int> inputBrands, Dictionary<int, int> inputCars, List<int> inputMechanic, string param = "")
         {
+            SimJeu simu = new SimJeu();
+            simu.DateBegin = date;
+            simu.Duration = dayCount.ToString();
+            simu.Param = param;
+
             StringBuilder res = new StringBuilder();
 
             List<SimCar> listCars = new List<SimCar>(); // Liste de toutes les voitures qui roulent
@@ -123,7 +128,7 @@ namespace auto_mechanic.Controllers
                     listCars.Add(new SimCar(carsBrands[r.Next(0, limit)]));
                 }
             }
-            
+
             // Chargement par model
             foreach (var pair in inputCars)
             {
@@ -140,18 +145,26 @@ namespace auto_mechanic.Controllers
                 Mechanic mechanic = db.Mechanic.Where(x => x.ID == mechanicID).FirstOrDefault();
                 mechanics.Add(new SimMechanic(mechanic, date, dayCount));
             }
-                
+
+
 
             res.AppendLine(mechanicsOutput(mechanics));
+
+            simu.Init = res.ToString();
+            db.SimJeu.Add(simu);
+            db.SaveChanges();
 
             // Début de la simulation
             for (int i = 0; i < dayCount; i++)
             {
-                StringBuilder dayString = new StringBuilder();
+                SimIterJeu simuIter = new SimIterJeu();
+                simuIter.SimID = simu.ID;
+
+                StringBuilder dayString = new StringBuilder(), planningString = new StringBuilder(), driveString = new StringBuilder();
                 //Assignation des voitures au garagiste que les jours de semaine
                 if (date.DayOfWeek == DayOfWeek.Saturday || date.DayOfWeek == DayOfWeek.Sunday)
                 {
-                    dayString.AppendLine("** Week-end pas de réparation");
+                    planningString.AppendLine("** Week-end pas de réparation");
                 }
                 else
                 {
@@ -171,9 +184,9 @@ namespace auto_mechanic.Controllers
 
                     foreach (SimMechanic sm in mechanics.Where(x => x.WorkingTime[i].TimeRemaining < 8))
                     {
-                        dayString.AppendLine(String.Format
+                        planningString.AppendLine(String.Format
                         ("**Planning de {0} ({1})", sm.Mechanic.Name, sm.Mechanic.Franchise.Name));
-                        dayString.AppendLine(sm.WorkingTime[i].ToString());
+                        planningString.AppendLine(sm.WorkingTime[i].ToString());
                     }
                 }
 
@@ -181,12 +194,12 @@ namespace auto_mechanic.Controllers
                 // Récupération de la liste des voitures qui roulent
                 List<SimCar> tempDriveCars = listCars.ToList();
                 List<SimCar> carsToRevision = new List<SimCar>(); // Liste temp des voitures à ajouter en révision
-                dayString.AppendLine(String.Format("** Distance parcourue ({0} voitures)", tempDriveCars.Count));
+                driveString.AppendLine(String.Format("** Distance parcourue ({0} voitures)", tempDriveCars.Count));
                 foreach (SimCar sCar in tempDriveCars)
                 {
                     // On ajout le nombre de KM
                     int km = sCar.GetDailyKm(date);
-                    dayString.Append(String.Format("\t - {0} {1} : {2} ({3}) == Révision : ", sCar.Car.Brand.Name, sCar.Car.Name, km, sCar.Km));
+                    driveString.Append(String.Format("\t - {0} {1} : {2} ({3}) == Révision : ", sCar.Car.Brand.Name, sCar.Car.Name, km, sCar.Km));
                     // Vérification d'une révision
                     bool rev = false;
                     if (sCar.IsNeedService())
@@ -195,7 +208,7 @@ namespace auto_mechanic.Controllers
                         carsToRevision.Add(sCar);
                         listCars.Remove(sCar);
                     }
-                    dayString.AppendLine(String.Format("{0} {1} - {2} Km", (rev) ? "Oui" : "Non", sCar.NextService.Label, sCar.NextService.KM));
+                    driveString.AppendLine(String.Format("{0} {1} - {2} Km", (rev) ? "Oui" : "Non", sCar.NextService.Label, sCar.NextService.KM));
                 }
 
                 #endregion
@@ -211,14 +224,17 @@ namespace auto_mechanic.Controllers
                     listCars.Add(rCar);
                 }
 
-                // On ajoute le jour que s'il y a des faits marquants
-                if (dayString.Length > 0)
-                {
-                    res.AppendLine("==========================================");
-                    res.AppendLine(date.ToShortDateString());
-                    res.AppendLine(dayString.ToString());
-                }
+                dayString.AppendLine("==========================================");
+                dayString.AppendLine(date.ToShortDateString());
+                res.AppendLine(dayString.ToString());
+                res.Append(planningString.ToString());
+                res.Append(driveString.ToString());
 
+                simuIter.Planning = dayString.ToString() + planningString.ToString();
+                simuIter.Drive = driveString.ToString();
+                simuIter.Repair = "";
+                db.SimIterJeu.Add(simuIter);
+                db.SaveChanges();
                 // Passage au lendemain
                 date = date.AddDays(1);
             }
@@ -234,12 +250,12 @@ namespace auto_mechanic.Controllers
             res.AppendLine(String.Format("/****** Mécaniciens ********/"));
             res.AppendLine(String.Format("Nombre de mécaniciens : {0}", list.Count));
             res.AppendLine("Liste : ");
-            foreach(SimMechanic sm in list)
+            foreach (SimMechanic sm in list)
                 res.AppendLine(String.Format("\t {0} ({1})", sm.Mechanic.Name, sm.Mechanic.Franchise.Name));
             res.AppendLine(String.Format("/******             ********/"));
 
             return res.ToString();
-        } 
+        }
         #endregion
 
         #region Select
@@ -256,7 +272,7 @@ namespace auto_mechanic.Controllers
             }
 
             return res;
-        } 
+        }
         #endregion
     }
 
@@ -366,7 +382,7 @@ namespace auto_mechanic.Controllers
         {
             this.Car = car;
             Thread.Sleep(1);
-            this.Km = new Random().Next(20,2000);
+            this.Km = new Random().Next(20, 2000);
             this.SetNextService();
         }
 
@@ -377,10 +393,10 @@ namespace auto_mechanic.Controllers
             Random rd = new Random((int)DateTime.Now.Ticks & 0x0000FFFF);
             int res;
 
-            if(dt.DayOfWeek == DayOfWeek.Saturday || dt.DayOfWeek == DayOfWeek.Sunday)
+            if (dt.DayOfWeek == DayOfWeek.Saturday || dt.DayOfWeek == DayOfWeek.Sunday)
                 res = rd.Next(50, 100);
             else
-                res = rd.Next(20,50);
+                res = rd.Next(20, 50);
 
             this.Km += res;
 

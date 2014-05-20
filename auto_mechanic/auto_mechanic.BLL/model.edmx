@@ -5,218 +5,256 @@
     <!-- SSDL content -->
     <edmx:StorageModels>
     <Schema Namespace="AutomechanicsModel.Store" Alias="Self" Provider="System.Data.SqlClient" ProviderManifestToken="2008" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
-  <EntityContainer Name="AutomechanicsModelStoreContainer">
-    <EntitySet Name="Mechanic" EntityType="AutomechanicsModel.Store.Mechanic" store:Type="Tables" Schema="dbo" />
-    <EntitySet Name="Franchise" EntityType="AutomechanicsModel.Store.Franchise" store:Type="Tables" Schema="dbo" />
-    <EntitySet Name="Service" EntityType="AutomechanicsModel.Store.Service" store:Type="Tables" Schema="dbo" />
-    <EntitySet Name="Mechanic_Service" EntityType="AutomechanicsModel.Store.Mechanic_Service" store:Type="Tables" Schema="dbo" />
-    <EntitySet Name="Car" EntityType="AutomechanicsModel.Store.Car" store:Type="Tables" Schema="dbo" />
-    <EntitySet Name="Brand" EntityType="AutomechanicsModel.Store.Brand" store:Type="Tables" Schema="dbo" />
-    <EntitySet Name="ServiceBook" EntityType="AutomechanicsModel.Store.ServiceBook" store:Type="Tables" Schema="dbo" />
-    <EntitySet Name="Holiday" EntityType="AutomechanicsModel.Store.Holiday" store:Type="Tables" Schema="dbo" />
-    <EntitySet Name="ServiceBookService" EntityType="AutomechanicsModel.Store.ServiceBookService" store:Type="Tables" Schema="dbo" />
-    <AssociationSet Name="FranchiseMechanic" Association="AutomechanicsModel.Store.FranchiseMechanic">
-      <End Role="Franchise" EntitySet="Franchise" />
-      <End Role="Mechanic" EntitySet="Mechanic" />
-    </AssociationSet>
-    <AssociationSet Name="MechanicMechanic_Service" Association="AutomechanicsModel.Store.MechanicMechanic_Service">
-      <End Role="Mechanic" EntitySet="Mechanic" />
-      <End Role="Mechanic_Service" EntitySet="Mechanic_Service" />
-    </AssociationSet>
-    <AssociationSet Name="ServiceMechanic_Service" Association="AutomechanicsModel.Store.ServiceMechanic_Service">
-      <End Role="Service" EntitySet="Service" />
-      <End Role="Mechanic_Service" EntitySet="Mechanic_Service" />
-    </AssociationSet>
-    <AssociationSet Name="BrandCar" Association="AutomechanicsModel.Store.BrandCar">
-      <End Role="Brand" EntitySet="Brand" />
-      <End Role="Car" EntitySet="Car" />
-    </AssociationSet>
-    <AssociationSet Name="ServiceBookCar" Association="AutomechanicsModel.Store.ServiceBookCar">
-      <End Role="ServiceBook" EntitySet="ServiceBook" />
-      <End Role="Car" EntitySet="Car" />
-    </AssociationSet>
-    <AssociationSet Name="FK_ServiceBookService_ServiceBook" Association="AutomechanicsModel.Store.FK_ServiceBookService_ServiceBook">
-      <End Role="ServiceBook" EntitySet="ServiceBook" />
-      <End Role="ServiceBookService" EntitySet="ServiceBookService" />
-    </AssociationSet>
-    <AssociationSet Name="FK_ServiceBookService_Service" Association="AutomechanicsModel.Store.FK_ServiceBookService_Service">
-      <End Role="Service" EntitySet="Service" />
-      <End Role="ServiceBookService" EntitySet="ServiceBookService" />
-    </AssociationSet>
-    <AssociationSet Name="MechanicHoliday" Association="AutomechanicsModel.Store.MechanicHoliday">
-      <End Role="Mechanic" EntitySet="Mechanic" />
-      <End Role="Holiday" EntitySet="Holiday" />
-    </AssociationSet>
-  </EntityContainer>
-  <EntityType Name="Mechanic">
-    <Key>
-      <PropertyRef Name="ID" />
-    </Key>
-    <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-    <Property Name="Name" Type="nvarchar(max)" Nullable="false" />
-    <Property Name="FranchiseID" Type="int" Nullable="false" />
-  </EntityType>
-  <EntityType Name="Franchise">
-    <Key>
-      <PropertyRef Name="ID" />
-    </Key>
-    <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-    <Property Name="Name" Type="nvarchar(max)" Nullable="false" />
-  </EntityType>
-  <EntityType Name="Service">
-    <Key>
-      <PropertyRef Name="ID" />
-    </Key>
-    <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-    <Property Name="Label" Type="nvarchar(max)" Nullable="false" />
-    <Property Name="KM" Type="int" Nullable="false" />
-  </EntityType>
-  <EntityType Name="Mechanic_Service">
-    <Key>
-      <PropertyRef Name="ID" />
-    </Key>
-    <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-    <Property Name="MechanicID" Type="int" Nullable="false" />
-    <Property Name="ServiceID" Type="int" Nullable="false" />
-    <Property Name="Duration" Type="int" Nullable="false" />
-  </EntityType>
-  <EntityType Name="Car">
-    <Key>
-      <PropertyRef Name="ID" />
-    </Key>
-    <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-    <Property Name="Name" Type="nvarchar(max)" Nullable="false" />
-    <Property Name="BrandID" Type="int" Nullable="false" />
-    <Property Name="ServiceBookID" Type="int" Nullable="false" />
-  </EntityType>
-  <EntityType Name="Brand">
-    <Key>
-      <PropertyRef Name="ID" />
-    </Key>
-    <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-    <Property Name="Name" Type="nvarchar(max)" Nullable="false" />
-  </EntityType>
-  <EntityType Name="ServiceBook">
-    <Key>
-      <PropertyRef Name="ID" />
-    </Key>
-    <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-    <Property Name="Name" Type="nvarchar(max)" Nullable="false" />
-  </EntityType>
-  <EntityType Name="Holiday">
-    <Key>
-      <PropertyRef Name="ID" />
-    </Key>
-    <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-    <Property Name="MechanicID" Type="int" Nullable="false" />
-    <Property Name="StartDate" Type="datetime" Nullable="false" />
-    <Property Name="EndDate" Type="datetime" Nullable="false" />
-  </EntityType>
-  <EntityType Name="ServiceBookService">
-    <Key>
-      <PropertyRef Name="ServiceBook_ID" />
-      <PropertyRef Name="Service_ID" />
-    </Key>
-    <Property Name="ServiceBook_ID" Type="int" Nullable="false" />
-    <Property Name="Service_ID" Type="int" Nullable="false" />
-  </EntityType>
-  <Association Name="FranchiseMechanic">
-    <End Role="Franchise" Type="AutomechanicsModel.Store.Franchise" Multiplicity="1" />
-    <End Role="Mechanic" Type="AutomechanicsModel.Store.Mechanic" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="Franchise">
-        <PropertyRef Name="ID" />
-      </Principal>
-      <Dependent Role="Mechanic">
-        <PropertyRef Name="FranchiseID" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
-  <Association Name="MechanicMechanic_Service">
-    <End Role="Mechanic" Type="AutomechanicsModel.Store.Mechanic" Multiplicity="1" />
-    <End Role="Mechanic_Service" Type="AutomechanicsModel.Store.Mechanic_Service" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="Mechanic">
-        <PropertyRef Name="ID" />
-      </Principal>
-      <Dependent Role="Mechanic_Service">
-        <PropertyRef Name="MechanicID" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
-  <Association Name="ServiceMechanic_Service">
-    <End Role="Service" Type="AutomechanicsModel.Store.Service" Multiplicity="1" />
-    <End Role="Mechanic_Service" Type="AutomechanicsModel.Store.Mechanic_Service" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="Service">
-        <PropertyRef Name="ID" />
-      </Principal>
-      <Dependent Role="Mechanic_Service">
-        <PropertyRef Name="ServiceID" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
-  <Association Name="BrandCar">
-    <End Role="Brand" Type="AutomechanicsModel.Store.Brand" Multiplicity="1" />
-    <End Role="Car" Type="AutomechanicsModel.Store.Car" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="Brand">
-        <PropertyRef Name="ID" />
-      </Principal>
-      <Dependent Role="Car">
-        <PropertyRef Name="BrandID" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
-  <Association Name="ServiceBookCar">
-    <End Role="ServiceBook" Type="AutomechanicsModel.Store.ServiceBook" Multiplicity="1" />
-    <End Role="Car" Type="AutomechanicsModel.Store.Car" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="ServiceBook">
-        <PropertyRef Name="ID" />
-      </Principal>
-      <Dependent Role="Car">
-        <PropertyRef Name="ServiceBookID" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
-  <Association Name="MechanicHoliday">
-    <End Role="Mechanic" Type="AutomechanicsModel.Store.Mechanic" Multiplicity="1" />
-    <End Role="Holiday" Type="AutomechanicsModel.Store.Holiday" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="Mechanic">
-        <PropertyRef Name="ID" />
-      </Principal>
-      <Dependent Role="Holiday">
-        <PropertyRef Name="MechanicID" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
-  <Association Name="FK_ServiceBookService_ServiceBook">
-    <End Role="ServiceBook" Type="AutomechanicsModel.Store.ServiceBook" Multiplicity="1" />
-    <End Role="ServiceBookService" Type="AutomechanicsModel.Store.ServiceBookService" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="ServiceBook">
-        <PropertyRef Name="ID" />
-      </Principal>
-      <Dependent Role="ServiceBookService">
-        <PropertyRef Name="ServiceBook_ID" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
-  <Association Name="FK_ServiceBookService_Service">
-    <End Role="ServiceBookService" Type="AutomechanicsModel.Store.ServiceBookService" Multiplicity="*" />
-    <End Role="Service" Type="AutomechanicsModel.Store.Service" Multiplicity="1" />
-    <ReferentialConstraint>
-      <Principal Role="Service">
-        <PropertyRef Name="ID" />
-      </Principal>
-      <Dependent Role="ServiceBookService">
-        <PropertyRef Name="Service_ID" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
-</Schema></edmx:StorageModels>
+        <EntityContainer Name="AutomechanicsModelStoreContainer">
+          <EntitySet Name="Brand" EntityType="AutomechanicsModel.Store.Brand" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="Car" EntityType="AutomechanicsModel.Store.Car" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="Franchise" EntityType="AutomechanicsModel.Store.Franchise" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="Holiday" EntityType="AutomechanicsModel.Store.Holiday" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="Mechanic" EntityType="AutomechanicsModel.Store.Mechanic" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="Mechanic_Service" EntityType="AutomechanicsModel.Store.Mechanic_Service" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="Service" EntityType="AutomechanicsModel.Store.Service" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="ServiceBook" EntityType="AutomechanicsModel.Store.ServiceBook" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="ServiceBookService" EntityType="AutomechanicsModel.Store.ServiceBookService" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="SimIterJeu" EntityType="AutomechanicsModel.Store.SimIterJeu" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="SimJeu" EntityType="AutomechanicsModel.Store.SimJeu" store:Type="Tables" Schema="dbo" />
+          <AssociationSet Name="FK_BrandCar" Association="AutomechanicsModel.Store.FK_BrandCar">
+            <End Role="Brand" EntitySet="Brand" />
+            <End Role="Car" EntitySet="Car" />
+          </AssociationSet>
+          <AssociationSet Name="FK_FranchiseMechanic" Association="AutomechanicsModel.Store.FK_FranchiseMechanic">
+            <End Role="Franchise" EntitySet="Franchise" />
+            <End Role="Mechanic" EntitySet="Mechanic" />
+          </AssociationSet>
+          <AssociationSet Name="FK_MechanicHoliday" Association="AutomechanicsModel.Store.FK_MechanicHoliday">
+            <End Role="Mechanic" EntitySet="Mechanic" />
+            <End Role="Holiday" EntitySet="Holiday" />
+          </AssociationSet>
+          <AssociationSet Name="FK_MechanicMechanic_Service" Association="AutomechanicsModel.Store.FK_MechanicMechanic_Service">
+            <End Role="Mechanic" EntitySet="Mechanic" />
+            <End Role="Mechanic_Service" EntitySet="Mechanic_Service" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ServiceBookCar" Association="AutomechanicsModel.Store.FK_ServiceBookCar">
+            <End Role="ServiceBook" EntitySet="ServiceBook" />
+            <End Role="Car" EntitySet="Car" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ServiceBookService_Service" Association="AutomechanicsModel.Store.FK_ServiceBookService_Service">
+            <End Role="Service" EntitySet="Service" />
+            <End Role="ServiceBookService" EntitySet="ServiceBookService" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ServiceBookService_ServiceBook" Association="AutomechanicsModel.Store.FK_ServiceBookService_ServiceBook">
+            <End Role="ServiceBook" EntitySet="ServiceBook" />
+            <End Role="ServiceBookService" EntitySet="ServiceBookService" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ServiceMechanic_Service" Association="AutomechanicsModel.Store.FK_ServiceMechanic_Service">
+            <End Role="Service" EntitySet="Service" />
+            <End Role="Mechanic_Service" EntitySet="Mechanic_Service" />
+          </AssociationSet>
+          <AssociationSet Name="FK_SimSimIter" Association="AutomechanicsModel.Store.FK_SimSimIter">
+            <End Role="SimJeu" EntitySet="SimJeu" />
+            <End Role="SimIterJeu" EntitySet="SimIterJeu" />
+          </AssociationSet>
+        </EntityContainer>
+        <EntityType Name="Brand">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="nvarchar(max)" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Car">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="BrandID" Type="int" Nullable="false" />
+          <Property Name="ServiceBookID" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Franchise">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="nvarchar(max)" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Holiday">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="MechanicID" Type="int" Nullable="false" />
+          <Property Name="StartDate" Type="datetime" Nullable="false" />
+          <Property Name="EndDate" Type="datetime" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Mechanic">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="FranchiseID" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Mechanic_Service">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="MechanicID" Type="int" Nullable="false" />
+          <Property Name="ServiceID" Type="int" Nullable="false" />
+          <Property Name="Duration" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Service">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="Label" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="KM" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="ServiceBook">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="nvarchar(max)" Nullable="false" />
+        </EntityType>
+        <EntityType Name="ServiceBookService">
+          <Key>
+            <PropertyRef Name="ServiceBook_ID" />
+            <PropertyRef Name="Service_ID" />
+          </Key>
+          <Property Name="ServiceBook_ID" Type="int" Nullable="false" />
+          <Property Name="Service_ID" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="SimIterJeu">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="SimID" Type="int" Nullable="false" />
+          <Property Name="Repair" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="Drive" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="Planning" Type="nvarchar(max)" Nullable="false" />
+        </EntityType>
+        <EntityType Name="SimJeu">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="DateBegin" Type="datetime" Nullable="false" />
+          <Property Name="Duration" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="Param" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="Init" Type="nvarchar(max)" Nullable="false" />
+        </EntityType>
+        <Association Name="FK_BrandCar">
+          <End Role="Brand" Type="AutomechanicsModel.Store.Brand" Multiplicity="1" />
+          <End Role="Car" Type="AutomechanicsModel.Store.Car" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Brand">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Car">
+              <PropertyRef Name="BrandID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_FranchiseMechanic">
+          <End Role="Franchise" Type="AutomechanicsModel.Store.Franchise" Multiplicity="1" />
+          <End Role="Mechanic" Type="AutomechanicsModel.Store.Mechanic" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Franchise">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Mechanic">
+              <PropertyRef Name="FranchiseID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_MechanicHoliday">
+          <End Role="Mechanic" Type="AutomechanicsModel.Store.Mechanic" Multiplicity="1" />
+          <End Role="Holiday" Type="AutomechanicsModel.Store.Holiday" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Mechanic">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Holiday">
+              <PropertyRef Name="MechanicID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_MechanicMechanic_Service">
+          <End Role="Mechanic" Type="AutomechanicsModel.Store.Mechanic" Multiplicity="1" />
+          <End Role="Mechanic_Service" Type="AutomechanicsModel.Store.Mechanic_Service" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Mechanic">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Mechanic_Service">
+              <PropertyRef Name="MechanicID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ServiceBookCar">
+          <End Role="ServiceBook" Type="AutomechanicsModel.Store.ServiceBook" Multiplicity="1" />
+          <End Role="Car" Type="AutomechanicsModel.Store.Car" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ServiceBook">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Car">
+              <PropertyRef Name="ServiceBookID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ServiceBookService_Service">
+          <End Role="Service" Type="AutomechanicsModel.Store.Service" Multiplicity="1" />
+          <End Role="ServiceBookService" Type="AutomechanicsModel.Store.ServiceBookService" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Service">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="ServiceBookService">
+              <PropertyRef Name="Service_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ServiceBookService_ServiceBook">
+          <End Role="ServiceBook" Type="AutomechanicsModel.Store.ServiceBook" Multiplicity="1" />
+          <End Role="ServiceBookService" Type="AutomechanicsModel.Store.ServiceBookService" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ServiceBook">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="ServiceBookService">
+              <PropertyRef Name="ServiceBook_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ServiceMechanic_Service">
+          <End Role="Service" Type="AutomechanicsModel.Store.Service" Multiplicity="1" />
+          <End Role="Mechanic_Service" Type="AutomechanicsModel.Store.Mechanic_Service" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Service">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Mechanic_Service">
+              <PropertyRef Name="ServiceID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_SimSimIter">
+          <End Role="SimJeu" Type="AutomechanicsModel.Store.SimJeu" Multiplicity="1" />
+          <End Role="SimIterJeu" Type="AutomechanicsModel.Store.SimIterJeu" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="SimJeu">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="SimIterJeu">
+              <PropertyRef Name="SimID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+      </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="AutomechanicsModel" Alias="Self" p1:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:p1="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
@@ -248,14 +286,20 @@
             <End Role="ServiceBook" EntitySet="ServiceBook" />
             <End Role="Car" EntitySet="Car" />
           </AssociationSet>
-          <AssociationSet Name="ServiceBookService" Association="AutomechanicsModel.ServiceBookService">
-            <End Role="ServiceBook" EntitySet="ServiceBook" />
-            <End Role="Service" EntitySet="Service" />
-          </AssociationSet>
           <EntitySet Name="Holiday" EntityType="AutomechanicsModel.Holiday" />
           <AssociationSet Name="MechanicHoliday" Association="AutomechanicsModel.MechanicHoliday">
             <End Role="Mechanic" EntitySet="Mechanic" />
             <End Role="Holiday" EntitySet="Holiday" />
+          </AssociationSet>
+          <EntitySet Name="SimIterJeu" EntityType="AutomechanicsModel.SimIterJeu" />
+          <EntitySet Name="SimJeu" EntityType="AutomechanicsModel.SimJeu" />
+          <AssociationSet Name="FK_SimSimIter" Association="AutomechanicsModel.FK_SimSimIter">
+            <End Role="SimJeu" EntitySet="SimJeu" />
+            <End Role="SimIterJeu" EntitySet="SimIterJeu" />
+          </AssociationSet>
+          <AssociationSet Name="ServiceBookService" Association="AutomechanicsModel.ServiceBookService">
+            <End Role="Service" EntitySet="Service" />
+            <End Role="ServiceBook" EntitySet="ServiceBook" />
           </AssociationSet>
         </EntityContainer>
         <EntityType Name="Mechanic">
@@ -263,7 +307,7 @@
             <PropertyRef Name="ID" />
           </Key>
           <Property Type="Int32" Name="ID" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Type="String" Name="Name" Nullable="false" />
+          <Property Type="String" Name="Name" Nullable="false" MaxLength="Max" Unicode="true" FixedLength="false" />
           <Property Type="Int32" Name="FranchiseID" Nullable="false" />
           <NavigationProperty Name="Franchise" Relationship="AutomechanicsModel.FranchiseMechanic" FromRole="Mechanic" ToRole="Franchise" />
           <NavigationProperty Name="Mechanic_Service" Relationship="AutomechanicsModel.MechanicMechanic_Service" FromRole="Mechanic" ToRole="Mechanic_Service" />
@@ -274,7 +318,7 @@
             <PropertyRef Name="ID" />
           </Key>
           <Property Type="Int32" Name="ID" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Type="String" Name="Name" Nullable="false" />
+          <Property Type="String" Name="Name" Nullable="false" MaxLength="Max" Unicode="true" FixedLength="false" />
         </EntityType>
         <Association Name="FranchiseMechanic">
           <End Type="AutomechanicsModel.Franchise" Role="Franchise" Multiplicity="1" />
@@ -293,8 +337,9 @@
             <PropertyRef Name="ID" />
           </Key>
           <Property Type="Int32" Name="ID" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Type="String" Name="Label" Nullable="false" />
+          <Property Type="String" Name="Label" Nullable="false" MaxLength="Max" Unicode="true" FixedLength="false" />
           <Property Type="Int32" Name="KM" Nullable="false" />
+          <NavigationProperty Name="ServiceBook" Relationship="AutomechanicsModel.ServiceBookService" FromRole="Service" ToRole="ServiceBook" />
         </EntityType>
         <EntityType Name="Mechanic_Service">
           <Key>
@@ -336,7 +381,7 @@
             <PropertyRef Name="ID" />
           </Key>
           <Property Type="Int32" Name="ID" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Type="String" Name="Name" Nullable="false" />
+          <Property Type="String" Name="Name" Nullable="false" MaxLength="Max" Unicode="true" FixedLength="false" />
           <Property Type="Int32" Name="BrandID" Nullable="false" />
           <NavigationProperty Name="Brand" Relationship="AutomechanicsModel.BrandCar" FromRole="Car" ToRole="Brand" />
           <NavigationProperty Name="ServiceBook" Relationship="AutomechanicsModel.ServiceBookCar" FromRole="Car" ToRole="ServiceBook" />
@@ -347,7 +392,7 @@
             <PropertyRef Name="ID" />
           </Key>
           <Property Type="Int32" Name="ID" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Type="String" Name="Name" Nullable="false" />
+          <Property Type="String" Name="Name" Nullable="false" MaxLength="Max" Unicode="true" FixedLength="false" />
         </EntityType>
         <Association Name="BrandCar">
           <End Type="AutomechanicsModel.Brand" Role="Brand" Multiplicity="1" />
@@ -366,7 +411,7 @@
             <PropertyRef Name="ID" />
           </Key>
           <Property Type="Int32" Name="ID" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Type="String" Name="Name" Nullable="false" />
+          <Property Type="String" Name="Name" Nullable="false" MaxLength="Max" Unicode="true" FixedLength="false" />
           <NavigationProperty Name="Service" Relationship="AutomechanicsModel.ServiceBookService" FromRole="ServiceBook" ToRole="Service" />
         </EntityType>
         <Association Name="ServiceBookCar">
@@ -381,18 +426,14 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="ServiceBookService">
-          <End Type="AutomechanicsModel.ServiceBook" Role="ServiceBook" Multiplicity="*" />
-          <End Type="AutomechanicsModel.Service" Role="Service" Multiplicity="*" />
-        </Association>
         <EntityType Name="Holiday">
           <Key>
             <PropertyRef Name="ID" />
           </Key>
           <Property Type="Int32" Name="ID" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Type="Int32" Name="MechanicID" Nullable="false" />
-          <Property Type="DateTime" Name="StartDate" Nullable="false" />
-          <Property Type="DateTime" Name="EndDate" Nullable="false" />
+          <Property Type="DateTime" Name="StartDate" Nullable="false" Precision="3" />
+          <Property Type="DateTime" Name="EndDate" Nullable="false" Precision="3" />
         </EntityType>
         <Association Name="MechanicHoliday">
           <End Type="AutomechanicsModel.Mechanic" Role="Mechanic" Multiplicity="1" />
@@ -406,12 +447,50 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <EntityType Name="SimIterJeu">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Type="Int32" Name="ID" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Type="Int32" Name="SimID" Nullable="false" />
+          <Property Type="String" Name="Repair" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Type="String" Name="Drive" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Type="String" Name="Planning" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="SimJeu" Relationship="AutomechanicsModel.FK_SimSimIter" FromRole="SimIterJeu" ToRole="SimJeu" />
+        </EntityType>
+        <EntityType Name="SimJeu">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Type="Int32" Name="ID" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Type="DateTime" Name="DateBegin" Nullable="false" Precision="3" />
+          <Property Type="String" Name="Duration" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Type="String" Name="Param" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Type="String" Name="Init" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="SimIterJeu" Relationship="AutomechanicsModel.FK_SimSimIter" FromRole="SimJeu" ToRole="SimIterJeu" />
+        </EntityType>
+        <Association Name="FK_SimSimIter">
+          <End Type="AutomechanicsModel.SimJeu" Role="SimJeu" Multiplicity="1" />
+          <End Type="AutomechanicsModel.SimIterJeu" Role="SimIterJeu" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="SimJeu">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="SimIterJeu">
+              <PropertyRef Name="SimID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="ServiceBookService">
+          <End Type="AutomechanicsModel.Service" Role="Service" Multiplicity="*" />
+          <End Type="AutomechanicsModel.ServiceBook" Role="ServiceBook" Multiplicity="*" />
+        </Association>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
     <edmx:Mappings>
     <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
-  <EntityContainerMapping StorageEntityContainer="AutomechanicsModelStoreContainer" CdmEntityContainer="AutomechanicsEntities">
+  <EntityContainerMapping CdmEntityContainer="AutomechanicsEntities" StorageEntityContainer="AutomechanicsModelStoreContainer">
     <EntitySetMapping Name="Mechanic">
       <EntityTypeMapping TypeName="IsTypeOf(AutomechanicsModel.Mechanic)">
         <MappingFragment StoreEntitySet="Mechanic">
@@ -484,14 +563,36 @@
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
-    <AssociationSetMapping Name="ServiceBookService" TypeName="AutomechanicsModel.ServiceBookService" StoreEntitySet="ServiceBookService">
-      <EndProperty Name="ServiceBook">
-        <ScalarProperty Name="ID" ColumnName="ServiceBook_ID" />
-      </EndProperty>
-      <EndProperty Name="Service">
-        <ScalarProperty Name="ID" ColumnName="Service_ID" />
-      </EndProperty>
-    </AssociationSetMapping>
+          <EntitySetMapping Name="SimIterJeu">
+            <EntityTypeMapping TypeName="AutomechanicsModel.SimIterJeu">
+              <MappingFragment StoreEntitySet="SimIterJeu">
+                <ScalarProperty Name="Planning" ColumnName="Planning" />
+                <ScalarProperty Name="Drive" ColumnName="Drive" />
+                <ScalarProperty Name="Repair" ColumnName="Repair" />
+                <ScalarProperty Name="SimID" ColumnName="SimID" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="SimJeu">
+            <EntityTypeMapping TypeName="AutomechanicsModel.SimJeu">
+              <MappingFragment StoreEntitySet="SimJeu">
+                <ScalarProperty Name="Init" ColumnName="Init" />
+                <ScalarProperty Name="Param" ColumnName="Param" />
+                <ScalarProperty Name="Duration" ColumnName="Duration" />
+                <ScalarProperty Name="DateBegin" ColumnName="DateBegin" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <AssociationSetMapping Name="ServiceBookService" TypeName="AutomechanicsModel.ServiceBookService" StoreEntitySet="ServiceBookService">
+            <EndProperty Name="ServiceBook">
+              <ScalarProperty Name="ID" ColumnName="ServiceBook_ID" />
+            </EndProperty>
+            <EndProperty Name="Service">
+              <ScalarProperty Name="ID" ColumnName="Service_ID" />
+            </EndProperty>
+          </AssociationSetMapping>
   </EntityContainerMapping>
 </Mapping></edmx:Mappings>
   </edmx:Runtime>

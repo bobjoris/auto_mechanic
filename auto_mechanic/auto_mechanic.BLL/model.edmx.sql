@@ -2,7 +2,7 @@
 -- --------------------------------------------------
 -- Entity Designer DDL Script for SQL Server 2005, 2008, and Azure
 -- --------------------------------------------------
--- Date Created: 05/12/2014 22:06:28
+-- Date Created: 05/20/2014 09:20:44
 -- Generated from EDMX file: C:\Users\Joris GIRARDOT\Documents\auto_mechanic\auto_mechanic\auto_mechanic.BLL\model.edmx
 -- --------------------------------------------------
 
@@ -17,11 +17,62 @@ GO
 -- Dropping existing FOREIGN KEY constraints
 -- --------------------------------------------------
 
+IF OBJECT_ID(N'[dbo].[FK_FranchiseMechanic]', 'F') IS NOT NULL
+    ALTER TABLE [dbo].[Mechanic] DROP CONSTRAINT [FK_FranchiseMechanic];
+GO
+IF OBJECT_ID(N'[dbo].[FK_MechanicMechanic_Service]', 'F') IS NOT NULL
+    ALTER TABLE [dbo].[Mechanic_Service] DROP CONSTRAINT [FK_MechanicMechanic_Service];
+GO
+IF OBJECT_ID(N'[dbo].[FK_ServiceMechanic_Service]', 'F') IS NOT NULL
+    ALTER TABLE [dbo].[Mechanic_Service] DROP CONSTRAINT [FK_ServiceMechanic_Service];
+GO
+IF OBJECT_ID(N'[dbo].[FK_BrandCar]', 'F') IS NOT NULL
+    ALTER TABLE [dbo].[Car] DROP CONSTRAINT [FK_BrandCar];
+GO
+IF OBJECT_ID(N'[dbo].[FK_ServiceBookCar]', 'F') IS NOT NULL
+    ALTER TABLE [dbo].[Car] DROP CONSTRAINT [FK_ServiceBookCar];
+GO
+IF OBJECT_ID(N'[dbo].[FK_ServiceBookService_ServiceBook]', 'F') IS NOT NULL
+    ALTER TABLE [dbo].[ServiceBookService] DROP CONSTRAINT [FK_ServiceBookService_ServiceBook];
+GO
+IF OBJECT_ID(N'[dbo].[FK_ServiceBookService_Service]', 'F') IS NOT NULL
+    ALTER TABLE [dbo].[ServiceBookService] DROP CONSTRAINT [FK_ServiceBookService_Service];
+GO
+IF OBJECT_ID(N'[dbo].[FK_MechanicHoliday]', 'F') IS NOT NULL
+    ALTER TABLE [dbo].[Holiday] DROP CONSTRAINT [FK_MechanicHoliday];
+GO
 
 -- --------------------------------------------------
 -- Dropping existing tables
 -- --------------------------------------------------
 
+IF OBJECT_ID(N'[dbo].[Mechanic]', 'U') IS NOT NULL
+    DROP TABLE [dbo].[Mechanic];
+GO
+IF OBJECT_ID(N'[dbo].[Franchise]', 'U') IS NOT NULL
+    DROP TABLE [dbo].[Franchise];
+GO
+IF OBJECT_ID(N'[dbo].[Service]', 'U') IS NOT NULL
+    DROP TABLE [dbo].[Service];
+GO
+IF OBJECT_ID(N'[dbo].[Mechanic_Service]', 'U') IS NOT NULL
+    DROP TABLE [dbo].[Mechanic_Service];
+GO
+IF OBJECT_ID(N'[dbo].[Car]', 'U') IS NOT NULL
+    DROP TABLE [dbo].[Car];
+GO
+IF OBJECT_ID(N'[dbo].[Brand]', 'U') IS NOT NULL
+    DROP TABLE [dbo].[Brand];
+GO
+IF OBJECT_ID(N'[dbo].[ServiceBook]', 'U') IS NOT NULL
+    DROP TABLE [dbo].[ServiceBook];
+GO
+IF OBJECT_ID(N'[dbo].[Holiday]', 'U') IS NOT NULL
+    DROP TABLE [dbo].[Holiday];
+GO
+IF OBJECT_ID(N'[dbo].[ServiceBookService]', 'U') IS NOT NULL
+    DROP TABLE [dbo].[ServiceBookService];
+GO
 
 -- --------------------------------------------------
 -- Creating all tables
@@ -91,9 +142,29 @@ CREATE TABLE [dbo].[Holiday] (
 );
 GO
 
+-- Creating table 'SimJeu'
+CREATE TABLE [dbo].[SimJeu] (
+    [ID] int IDENTITY(1,1) NOT NULL,
+    [DateBegin] datetime  NOT NULL,
+    [Duration] nvarchar(max)  NOT NULL,
+    [Param] nvarchar(max)  NOT NULL,
+    [Init] nvarchar(max)  NOT NULL
+);
+GO
+
+-- Creating table 'SimIterJeu'
+CREATE TABLE [dbo].[SimIterJeu] (
+    [ID] int IDENTITY(1,1) NOT NULL,
+    [SimID] int  NOT NULL,
+    [Repair] nvarchar(max)  NOT NULL,
+    [Drive] nvarchar(max)  NOT NULL,
+    [Planning] nvarchar(max)  NOT NULL
+);
+GO
+
 -- Creating table 'ServiceBookService'
 CREATE TABLE [dbo].[ServiceBookService] (
-    [ServiceBook_ID] int  NOT NULL,
+    [ServiceBookService_Service_ID] int  NOT NULL,
     [Service_ID] int  NOT NULL
 );
 GO
@@ -150,10 +221,22 @@ ADD CONSTRAINT [PK_Holiday]
     PRIMARY KEY CLUSTERED ([ID] ASC);
 GO
 
--- Creating primary key on [ServiceBook_ID], [Service_ID] in table 'ServiceBookService'
+-- Creating primary key on [ID] in table 'SimJeu'
+ALTER TABLE [dbo].[SimJeu]
+ADD CONSTRAINT [PK_SimJeu]
+    PRIMARY KEY CLUSTERED ([ID] ASC);
+GO
+
+-- Creating primary key on [ID] in table 'SimIterJeu'
+ALTER TABLE [dbo].[SimIterJeu]
+ADD CONSTRAINT [PK_SimIterJeu]
+    PRIMARY KEY CLUSTERED ([ID] ASC);
+GO
+
+-- Creating primary key on [ServiceBookService_Service_ID], [Service_ID] in table 'ServiceBookService'
 ALTER TABLE [dbo].[ServiceBookService]
 ADD CONSTRAINT [PK_ServiceBookService]
-    PRIMARY KEY NONCLUSTERED ([ServiceBook_ID], [Service_ID] ASC);
+    PRIMARY KEY NONCLUSTERED ([ServiceBookService_Service_ID], [Service_ID] ASC);
 GO
 
 -- --------------------------------------------------
@@ -230,10 +313,10 @@ ON [dbo].[Car]
     ([ServiceBookID]);
 GO
 
--- Creating foreign key on [ServiceBook_ID] in table 'ServiceBookService'
+-- Creating foreign key on [ServiceBookService_Service_ID] in table 'ServiceBookService'
 ALTER TABLE [dbo].[ServiceBookService]
 ADD CONSTRAINT [FK_ServiceBookService_ServiceBook]
-    FOREIGN KEY ([ServiceBook_ID])
+    FOREIGN KEY ([ServiceBookService_Service_ID])
     REFERENCES [dbo].[ServiceBook]
         ([ID])
     ON DELETE NO ACTION ON UPDATE NO ACTION;
@@ -265,6 +348,20 @@ ADD CONSTRAINT [FK_MechanicHoliday]
 CREATE INDEX [IX_FK_MechanicHoliday]
 ON [dbo].[Holiday]
     ([MechanicID]);
+GO
+
+-- Creating foreign key on [SimID] in table 'SimIterJeu'
+ALTER TABLE [dbo].[SimIterJeu]
+ADD CONSTRAINT [FK_SimSimIter]
+    FOREIGN KEY ([SimID])
+    REFERENCES [dbo].[SimJeu]
+        ([ID])
+    ON DELETE NO ACTION ON UPDATE NO ACTION;
+
+-- Creating non-clustered index for FOREIGN KEY 'FK_SimSimIter'
+CREATE INDEX [IX_FK_SimSimIter]
+ON [dbo].[SimIterJeu]
+    ([SimID]);
 GO
 
 -- --------------------------------------------------

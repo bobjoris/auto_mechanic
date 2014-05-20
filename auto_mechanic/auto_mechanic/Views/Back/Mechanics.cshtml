@@ -19,12 +19,9 @@
           <tr ng-repeat="mechanic in mechanics">
             <th>{{mechanic.Name}}</th>
             <th>{{mechanic.Franchise.Name}}</th>
-            <th><a href="#">ici</a></th>
+            <th><a href="#">Accéder</a></th>
             <th class="tcenter">
               <div class="btn-group">
-                <a ng-click="edit(mechanic)" class="btn btn-default btn-xs">
-                  <span class="glyphicon glyphicon-pencil"></span>
-                </a>
                 <a ng-click="delete(mechanic)" class="btn btn-danger btn-xs">
                   <span class="glyphicon glyphicon-trash"></span>
                 </a>
