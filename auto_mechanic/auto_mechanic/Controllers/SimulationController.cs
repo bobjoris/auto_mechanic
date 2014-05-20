@@ -8,6 +8,7 @@ using System.Web.Http;
 using auto_mechanic.BLL;
 using auto_mechanic.Models;
 using System.Threading;
+using System.IO;
 
 namespace auto_mechanic.Controllers
 {
@@ -18,21 +19,7 @@ namespace auto_mechanic.Controllers
         // GET api/simulation
         public HttpResponseMessage Get()
         {
-            String param = "2014-05-19,100;1:2,2:0,4:0,11:0,10:0;6:0,7:0,14:0,27:12,28:0;1,3";
-
-            DateTime dt = new DateTime();
-            int count = 0;
-            Dictionary<int, int> Brands = new Dictionary<int, int>();
-            Dictionary<int, int> Cars = new Dictionary<int, int>();
-            List<int> Mechanics = new List<int>();
-
-            splitString(param, ref dt, ref count, ref Brands, ref Cars, ref Mechanics);
-
-            String res = performSimulation(dt, count, Brands, Cars, Mechanics);
-            return new HttpResponseMessage()
-            {
-                Content = new StringContent(res, Encoding.UTF8, "text/plain")
-            };
+            return Tools.JsonResponse(db.SimJeu.AsEnumerable());
         }
 
         // GET api/simulation/5
@@ -42,7 +29,7 @@ namespace auto_mechanic.Controllers
         }
 
         // POST api/simulation
-        public void Post([FromBody]string value)
+        public HttpResponseMessage Post([FromBody]string value)
         {
             DateTime dt = new DateTime();
             int count = 0;
@@ -52,7 +39,20 @@ namespace auto_mechanic.Controllers
 
             splitString(value, ref dt, ref count, ref Brands, ref Cars, ref Mechanics);
 
-            this.performSimulation(dt, count, Brands, Cars, Mechanics);
+            string res = this.performSimulation(dt, count, Brands, Cars, Mechanics);
+
+            /*return new HttpResponseMessage()
+            {
+                Content = new StringContent(res, Encoding.UTF8, "text/plain")
+            };*/
+            string dur = count.ToString();
+            SimJeu sim = db.SimJeu.Where(x => x.DateBegin == dt && x.Duration == dur).OrderByDescending(x => x.ID).FirstOrDefault();
+
+            /*HttpResponseMessage response = Request.CreateResponse(HttpStatusCode.Created, sim);
+            response.Headers.Location = new Uri(Url.Link("DefaultApi", new { id = sim.ID }));
+            return response; */
+
+            return Tools.JsonResponse(sim);
 
         }
 
@@ -173,7 +173,7 @@ namespace auto_mechanic.Controllers
                         SimCar sCar = waitCar[j];
                         if (!sCar.NextDelivery.HasValue)
                         {
-                            SimMechanic sm = mechanics.Where(x => x.WorkingTime[i].TimeRemaining > 0).FirstOrDefault();
+                            SimMechanic sm = mechanics.Where(x => x.WorkingTime[i].TimeRemaining > 0 && !x.IsInHoliday(date)).FirstOrDefault();
                             if (sm != null)
                             {
                                 sm.SetService(i, ref sCar, date.AddDays(1).DayOfWeek == DayOfWeek.Saturday);
@@ -233,11 +233,14 @@ namespace auto_mechanic.Controllers
                 simuIter.Planning = dayString.ToString() + planningString.ToString();
                 simuIter.Drive = driveString.ToString();
                 simuIter.Repair = "";
+                simuIter.Iteration = i;
                 db.SimIterJeu.Add(simuIter);
                 db.SaveChanges();
                 // Passage au lendemain
                 date = date.AddDays(1);
             }
+
+            //WriteLog(@"c:\sample1.txt", res.ToString());
 
             return res.ToString();
         }
@@ -255,6 +258,21 @@ namespace auto_mechanic.Controllers
             res.AppendLine(String.Format("/******             ********/"));
 
             return res.ToString();
+        }
+
+        private void WriteLog(string fileName, string Output)
+        {
+            FileStream fs = null;
+            if (!File.Exists(fileName))
+            {
+                File.Create(fileName);
+            }
+
+            using (StreamWriter sw = new StreamWriter(fileName))
+            {
+                sw.Write(Output);
+                sw.Close();
+            }
         }
         #endregion
 

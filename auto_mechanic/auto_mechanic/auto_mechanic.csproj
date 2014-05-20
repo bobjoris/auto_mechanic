@@ -300,6 +300,7 @@
     <Content Include="Scripts\user\services\mechanics.js" />
     <Content Include="Scripts\user\services\servicebooks.js" />
     <Content Include="Scripts\user\services\services.js" />
+    <Content Include="Scripts\user\services\simulations.js" />
     <Content Include="Web.config">
       <SubType>Designer</SubType>
     </Content>

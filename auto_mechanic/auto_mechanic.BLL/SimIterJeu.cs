@@ -19,6 +19,7 @@ namespace auto_mechanic.BLL
         public string Repair { get; set; }
         public string Drive { get; set; }
         public string Planning { get; set; }
+        public int Iteration { get; set; }
     
         public virtual SimJeu SimJeu { get; set; }
     }

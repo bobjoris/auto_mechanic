@@ -3,8 +3,8 @@
     ViewBag.Title = "Contact";
 }
 <h1>Configuration de la simulation</h1>
-
-<div class="row" ng-controller="ConfigCtrl">
+<div ng-controller="ConfigCtrl">
+<div class="row">
     <div class="col-md-8">
         <div class="panel panel-primary">
             <div class="panel-heading">Paramètres</div>
@@ -44,7 +44,8 @@
                                     <tbody>
                                         <tr ng-repeat="brand in brands | orderBy: 'Name'">
                                             <td class="text-center">{{ brand.Name }}</td>
-                                            <td><input type="number" class="form-control countBrand" data-id="{{ brand.ID }}" value="0" min="0" max="100" /></td>
+                                            <td>
+                                                <input type="number" class="form-control countBrand" data-id="{{ brand.ID }}" value="0" min="0" max="100" /></td>
                                         </tr>
                                     </tbody>
                                 </table>
@@ -60,7 +61,8 @@
                                     <tbody>
                                         <tr ng-repeat="car in cars | orderBy: ['Brand.Name','Name']">
                                             <td class="text-center"><small>{{ car.Brand.Name }}</small> {{ car.Name }} </td>
-                                            <td><input type="number" class="form-control countCar" data-id="{{ car.ID }}" value="0" min="0" max="100" /></td>
+                                            <td>
+                                                <input type="number" class="form-control countCar" data-id="{{ car.ID }}" value="0" min="0" max="100" /></td>
                                         </tr>
                                     </tbody>
                                 </table>
@@ -70,33 +72,73 @@
                     <hr />
                     <div class="form-group">
                         <label>Garagiste</label>
-                         <table class="table">
-                                    <thead>
-                                        <tr>
-                                            <th>Nom</th>
-                                            <th>Sélection</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        <tr ng-repeat="mechanic in mechanics | orderBy: ['Name']">
-                                            <td class="text-center"><label for="{{ mechanic.Name }}">{{ mechanic.Name }}</label></td>
-                                            <td><input type="checkbox" class="chxMechanic" data-idm="{{ mechanic.ID }}" id="{{mechanic.Name}}" /></td>
-                                        </tr>
-                                    </tbody>
-                                </table>
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th>Nom</th>
+                                    <th>Sélection</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr ng-repeat="mechanic in mechanics | orderBy: ['Name']">
+                                    <td class="text-center">
+                                        <label for="{{ mechanic.Name }}">{{ mechanic.Name }}</label></td>
+                                    <td>
+                                        <input type="checkbox" class="chxMechanic" data-idm="{{ mechanic.ID }}" id="{{mechanic.Name}}" /></td>
+                                </tr>
+                            </tbody>
+                        </table>
                     </div>
-                     <button type="submit" ng-click="setSimu()" class="btn btn-success">Lancer la simulation</button>
+                    <button type="submit" ng-click="setSimu()" class="btn btn-success">Lancer la simulation</button>
                 </form>
             </div>
         </div>
     </div>
     <div class="col-md-4">
-         <div class="panel panel-default">
+        <div class="panel panel-default">
             <div class="panel-heading">Résultats précédents</div>
-             <div class="panel-body"></div>
-          </div>
+            <div class="panel-body">
+                <ul class="list-unstyled">
+                    <li ng-repeat="sm in simulations"><a ng-click="showSimulation(sm)">{{ sm.DateBegin }} ({{ sm.Duration}} jours)</a></li>
+                </ul>
+            </div>
+        </div>
     </div>
 </div>
+<div class="row">
+    <div class="col-md-12">
+        <div class="panel panel-default">
+            <div class="panel-heading">Résultats de la simulation</div>
+            <div class="panel-body">
+                <div id="result">
+                    {{ simulation.ID }} // {{ simulation.Duration }}
+                    <table class="table">
+                        <caption>Jour n° {{ simulationIter.Iteration }}</caption>
+                        <thead>
+                            <tr>
+                                <th>Sortie</th>
+                                <th>Résultat</th>
+                            </tr>
+                        </thead>
+
+                        <tbody>
+                            <tr>
+                                <td>Planning mécanicien</td>
+                                <td><span ng-bind-html="planning"></span></td>
+                            </tr>
+                            <tr>
+                                <td>Roulage</td>
+                                <td><span ng-bind-html="drive"></span></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <button type="button" ng-click="nextIter()" class="btn btn-success">Jour suivant</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+    </div>
 <script>
     $(document).ready(function () {
         $('#rangeDuration').mousemove(function () {

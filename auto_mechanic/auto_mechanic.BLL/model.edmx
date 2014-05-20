@@ -135,6 +135,7 @@
           <Property Name="Repair" Type="nvarchar(max)" Nullable="false" />
           <Property Name="Drive" Type="nvarchar(max)" Nullable="false" />
           <Property Name="Planning" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="Iteration" Type="int" Nullable="false" />
         </EntityType>
         <EntityType Name="SimJeu">
           <Key>
@@ -457,6 +458,7 @@
           <Property Type="String" Name="Drive" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Type="String" Name="Planning" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
           <NavigationProperty Name="SimJeu" Relationship="AutomechanicsModel.FK_SimSimIter" FromRole="SimIterJeu" ToRole="SimJeu" />
+          <Property Type="Int32" Name="Iteration" Nullable="false" />
         </EntityType>
         <EntityType Name="SimJeu">
           <Key>
@@ -566,6 +568,7 @@
           <EntitySetMapping Name="SimIterJeu">
             <EntityTypeMapping TypeName="AutomechanicsModel.SimIterJeu">
               <MappingFragment StoreEntitySet="SimIterJeu">
+                <ScalarProperty Name="Iteration" ColumnName="Iteration" />
                 <ScalarProperty Name="Planning" ColumnName="Planning" />
                 <ScalarProperty Name="Drive" ColumnName="Drive" />
                 <ScalarProperty Name="Repair" ColumnName="Repair" />

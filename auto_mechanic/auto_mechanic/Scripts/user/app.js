@@ -8,6 +8,11 @@ angular
     'ngRoute',
     'checklist-model'
   ])
+.filter('newlines', function () {
+    return function(text) {
+        return text.replace(/\n/g, '<br/>');
+    };
+})
   .config(function ($routeProvider) {
       $routeProvider
         .when('/cars', {
