@@ -17,6 +17,7 @@ angular.module('simulationApp')
     };
 
     $scope.delete = function (mechanic) {
+        mechanic['Mechanic_Service'] = null;
       Mechanics.delete(mechanic, function(){
       $scope.mechanics = _.without($scope.mechanics, mechanic);
       });
@@ -33,4 +34,29 @@ angular.module('simulationApp')
             $scope.holidays = _.without($scope.holidays, holiday);
         });
     };
+
+
+    $scope.show = function (event) {
+
+        var elem = $(event.target).parent().find('ul');
+
+        if (elem.css('display') == 'none')
+            elem.css('display', 'block');
+        else
+            elem.css('display', 'none');
+    };
+
+    $scope.update = function (event) {
+        var elem = $(event.target);
+
+        var idMechanic = elem.data('idm');
+        var idService = elem.data('ids');
+        var val = elem.val();
+
+        var data = idMechanic + ':' + idService + ':' + val;
+
+        $.post('/api/mechanicservice/', { '': data }, function () { });
+        console.log(data);
+    };
+
   });

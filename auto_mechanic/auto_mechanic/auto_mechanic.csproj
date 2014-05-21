@@ -184,6 +184,7 @@
     <Compile Include="Controllers\BackController.cs" />
     <Compile Include="Controllers\BrandController.cs" />
     <Compile Include="Controllers\CarController.cs" />
+    <Compile Include="Controllers\MechanicServiceController.cs" />
     <Compile Include="Controllers\ServiceBookController.cs" />
     <Compile Include="Controllers\MechanicController.cs" />
     <Compile Include="Controllers\FranchiseController.cs" />

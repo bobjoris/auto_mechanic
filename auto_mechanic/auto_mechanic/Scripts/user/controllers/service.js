@@ -11,7 +11,7 @@ angular.module('simulationApp')
 
       $scope.add = function (form) {
           if (!$scope.isEdit)
-            $scope.service.label = $scope.service.label + '#' + $scope.service.duration;
+            $scope.service.label = $scope.service.Label + '#' + $scope.service.Duration;
           $scope.service.$save();
           if(!$scope.isEdit)
             $scope.services.push($scope.service);

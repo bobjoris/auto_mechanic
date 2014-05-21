@@ -4,7 +4,7 @@
 <ng-include src="'back/navbar'"></ng-include>
 <div ng-controller="MechanicCtrl">
     <div class="row">
-        <div class="col-md-6">
+        <div class="col-md-8">
             <div class="panel panel-default">
                 <div class="panel-heading">Liste des garagistes</div>
                 <table class="table table-bordered">
@@ -12,6 +12,7 @@
                         <tr>
                             <th>Nom</th>
                             <th>Franchise</th>
+                            <th>Service</th>
                             <th>Actions</th>
                         </tr>
                     </thead>
@@ -19,6 +20,12 @@
                         <tr ng-repeat="mechanic in mechanics">
                             <th>{{mechanic.Name}}</th>
                             <th>{{mechanic.Franchise.Name}}</th>
+                            <td>
+                                <a ng-click="show($event)" class="btnShow" style="cursor: pointer">Voir</a>
+                                <ul class="list-unstyled listService" style="display: none">
+                                    <li ng-repeat="ms in mechanic.Mechanic_Service">{{ ms.Service.Label }}<br /> <input type="number" value="{{ ms.Duration }}" ng-blur="update($event)" data-idm="{{ mechanic.ID }}" data-ids="{{ ms.Service.ID }}" class="form-control" /></li>
+                                </ul>
+                            </td>
                             <th class="tcenter">
                                 <div class="btn-group">
                                     <a ng-click="delete(mechanic)" class="btn btn-danger btn-xs">
@@ -31,7 +38,7 @@
                 </table>
             </div>
         </div>
-        <div class="col-md-6">
+        <div class="col-md-4">
             <div class="panel panel-default">
                 <div class="panel-heading">Ajouter un garagiste</div>
                 <div class="panel-body">
@@ -52,7 +59,7 @@
         </div>
     </div>
     <div class="row">
-        <div class="col-md-6">
+        <div class="col-md-8">
             <div class="panel panel-default">
                 <div class="panel-heading">Liste des vacances</div>
                 <table class="table table-bordered">
@@ -81,7 +88,7 @@
                 </table>
             </div>
         </div>
-        <div class="col-md-6">
+        <div class="col-md-4">
             <div class="panel panel-default">
                 <div class="panel-heading">Ajouter des vacances</div>
                 <div class="panel-body">
@@ -105,3 +112,4 @@
         </div>
     </div>
 </div>
+
